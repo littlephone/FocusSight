@@ -1,4 +1,4 @@
-package com.focussight;
+package com.focussight.dao;
 
 import java.sql.*;
 
