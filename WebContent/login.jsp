@@ -34,9 +34,11 @@
 <div class="cardtitle">Login to FocusSight EE</div>
 
 <form method="POST" action="Login">
-Username: <input type="text" name="username"/><br/>
-Password: <input type="password" name="password"/><br/>
+<div class="formrow"> Username: <input type="text" name="username"/></div>
+<div class="formrow"> Password: <input type="password" name="password"/></div>
 <input type="submit" value="Submit"/>
+
+<div class="formrow">New to here? <a href="register.jsp">Register</a></div>
 </form>
 
 </div>
