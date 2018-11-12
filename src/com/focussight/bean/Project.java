@@ -11,50 +11,12 @@ public class Project {
 	private float progress;
 	private String pintro;
 	private String psnapshot;
-	
-	public Project(int pid) {
-		String stmt = "SELECT * FROM project WHERE pid=?";
-		SQLToolkit toolkit = new SQLToolkit();
-		Connection conn = toolkit.Connect();
-		
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(stmt);
-			pstmt.setInt(1, pid);
-			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			
-			//Setting values 
-			this.pid = pid;
-			pname = rs.getString("pname");
-			manage_id = rs.getInt("manage_id");
-			requirements = rs.getString("requirements");
-			progress = rs.getFloat("progress");
-			pintro = rs.getString("pintro");
-			psnapshot =rs.getString("psnapshot");
-			conn.close();
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
+
 	public Project() {
 		//do nothing
 	}
 	
-	public void createProject(String pname, int manage_id, String requirements,
-			float progress, String pintro, String psnapshot) {
-		
-		SQLToolkit toolkit = new SQLToolkit();
-		Connection conn = toolkit.Connect();
-		String stmt = "INSERT INTO project (pname, manage_id, requirements, progress, pintro, psnapshot)"
-				+ "VALUES (?,?,?,?,?,?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(stmt);
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public int getPid() {
 		return pid;

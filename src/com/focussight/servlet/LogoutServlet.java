@@ -1,4 +1,4 @@
-package com.focussight;
+package com.focussight.servlet;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,14 +11,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class Logout
  */
-@WebServlet("/Logout")
-public class Logout extends HttpServlet {
+@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
