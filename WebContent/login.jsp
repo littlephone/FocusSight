@@ -30,14 +30,11 @@
 </head>
 <body>
 <div class="cardwrapper">
-
 <div class="cardtitle">Login to FocusSight EE</div>
 
 <form method="POST" action="Login">
 <div class="formrow"> Username: <input type="text" name="username"/></div>
 <div class="formrow"> Password: <input type="password" name="password"/></div>
-<input type="submit" value="Submit"/>
-
 <div class="formrow">New to here? <a href="register.jsp">Register</a></div>
 </form>
 
