@@ -1,4 +1,4 @@
-package com.focussight;
+package com.focussight.servlet;
 
 import java.io.IOException;
 import java.sql.*;
@@ -10,16 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.focussight.dao.SQLToolkit;
-import com.focussight.bean.Users;
-
+import com.focussight.dao.*;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
-	public Users user;
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+	public UserDao userdao;
 	public Connection conn;
 	
 	private static final long serialVersionUID = 1L;
@@ -27,7 +24,7 @@ public class Login extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public LoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -55,10 +52,11 @@ public class Login extends HttpServlet {
 	throws ServletException, IOException{
 		
 		// V: Connection
-		user = new Users(username);
 		
-		boolean usernamestat = user.isUserExists();
-		boolean passwdstat = user.passwordVerify(passwd);
+		userdao = new UserDao(username);
+		
+		boolean usernamestat = userdao.checkUser();
+		boolean passwdstat = userdao.passwordVerify(passwd);
 		
 		
 		
@@ -68,7 +66,7 @@ public class Login extends HttpServlet {
 			//Then the username is correct
 			System.out.println("The user exists"); 
 			
-			int userid = user.getUid();
+			int userid = userdao.user.getUid();
 			
 			session.setAttribute("username", username);
 			session.setAttribute("id", userid);
