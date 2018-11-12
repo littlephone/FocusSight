@@ -4,7 +4,9 @@ public class Member {
 	//Columns in table member
 	private int pid;
 	private int mid;
-	private String status;
+	private int status;
+	private String reason;
+	
 	public int getPid() {
 		return pid;
 	}
@@ -17,10 +19,17 @@ public class Member {
 	public void setMid(int mid) {
 		this.mid = mid;
 	}
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
 }

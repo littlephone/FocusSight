@@ -22,10 +22,10 @@ String uname = (String)session.getAttribute("username");
 int id = (Integer)session.getAttribute("id");
 if(uname != null){
 	out.println("<a class=\"toplink\">" + uname + "</a>");
-	out.println("<a class=\"toplink\" href=\"Logout\">Logout</a>");
+	out.println("<a class=\"toplink\" href=\"LogoutServlet\">Logout</a>");
 }else{
 %>
-<a class="toplink" href="login.jsp">Login</a>
+<a class="toplink" href="/FocusSight/login.jsp">Login</a>
 <a class="toplink">New to here? Register</a>
 <%}%>
 </div>
