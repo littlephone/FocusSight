@@ -35,6 +35,7 @@
 <form method="POST" action="Login">
 <div class="formrow"> Username: <input type="text" name="username"/></div>
 <div class="formrow"> Password: <input type="password" name="password"/></div>
+<div class="formrow"><input type="submit" name="submit" value="Submit"/></div>
 <div class="formrow">New to here? <a href="register.jsp">Register</a></div>
 </form>
 
