@@ -22,7 +22,7 @@ Login to FocusSight EE
  
  if(mode == null || !mode.equals("verify")){
 %>
-<form method="POST" action="login.jsp?mode=verify">
+<form method="POST" action="Userservlet">
 Username: <input type="text" name="username"/><br/>
 Password: <input type="password" name="password"/><br/>
 <input type="submit" value="Submit"/>
