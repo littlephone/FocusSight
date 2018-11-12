@@ -22,63 +22,7 @@ public class Users {
 	
 	public boolean isUserExists = false;
 	
-	public Users(int uid) {
-		//Constructor: to check details by userid
-		String usersql = "SELECT * FROM users WHERE userid = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(usersql);
-			pstmt.setInt(1, uid);
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				isUserExists = true;
-				//Set all the properties
-				userid = rs.getInt("userid");
-				username = rs.getString("username");
-				password = rs.getString("password");
-				gender = rs.getString("gender");
-				profession = rs.getString("profession");
-				age = rs.getInt("age");
-				email = rs.getString("email");
-				regdate = rs.getDate("reg_date");
-				phone = rs.getString("phone");	
-			}else {
-				isUserExists = false;
-			}
-			
-		}catch(SQLException e) {
-			
-		}
-		
-	}
 	
-	public Users(String uname) {
-		//Initialise via username
-		String usersql = "SELECT * FROM users WHERE username = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(usersql);
-			pstmt.setString(1, uname);
-			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
-				isUserExists = true;	
-				//Set all the properties
-				userid = rs.getInt("userid");
-				username = rs.getString("username");
-				password = rs.getString("password");
-				gender = rs.getString("gender");
-				profession = rs.getString("profession");
-				age = rs.getInt("age");
-				email = rs.getString("email");
-				regdate = rs.getDate("reg_date");
-				phone = rs.getString("phone");
-			}else {
-				isUserExists = false;
-			}
-		}catch(SQLException e) {
-			
-		}
-		
-		
-	}
 	public Users() {
 		//do nothing
 	}
@@ -163,8 +107,5 @@ public class Users {
 	
 	public boolean isUserExists() {
 		return this.isUserExists;
-	}
-	public boolean passwordVerify(String entrypassword) {
-		return (Objects.equals(password, entrypassword))? true : false;
 	}
 }

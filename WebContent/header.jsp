@@ -14,7 +14,7 @@
 }
 </style>
 <div class='header'>
-<a class="toplink" href="index.jsp">FocusSight</a>
+<a class="toplink" href="/FocusSight/index.jsp">FocusSight</a>
 <a class="toplink">viewProjectByCatagory()</a>
 <a class="toplink">How does it work?</a>
 <%

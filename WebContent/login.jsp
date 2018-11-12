@@ -32,7 +32,7 @@
 <div class="cardwrapper">
 <div class="cardtitle">Login to FocusSight EE</div>
 
-<form method="POST" action="Login">
+<form method="POST" action="LoginServlet">
 <div class="formrow"> Username: <input type="text" name="username"/></div>
 <div class="formrow"> Password: <input type="password" name="password"/></div>
 <div class="formrow"><input type="submit" name="submit" value="Submit"/></div>

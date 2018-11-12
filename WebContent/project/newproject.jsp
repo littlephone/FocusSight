@@ -16,7 +16,7 @@ body{
 <title>New Project - Labstry FocusSightEE</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 
 <% if(uname != null){ %>
 

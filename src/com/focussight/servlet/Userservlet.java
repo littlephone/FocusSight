@@ -1,7 +1,6 @@
 package com.focussight.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -12,23 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 
 import com.focussight.bean.Users;
-import com.focussight.service.Userservice;
+import com.focussight.dao.*;
 
 @WebServlet("/Userservlet")
 public class Userservlet extends HttpServlet {
-    Userservice ld=new Userservice();
+    LoginDao ld=new LoginDao();
    	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	 request.setCharacterEncoding("UTF-8");
-	 //»ñÈ¡Êý¾Ý
+	 //ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
 	 String uname=request.getParameter("username");
 	 System.out.println(uname);
 	 String upwd=request.getParameter("password");
 	 if(uname.equals("")||upwd.equals("")) {
-		 JOptionPane.showMessageDialog(null, "ÓÃ»§Ãû»òÃÜÂë²»ÄÜÎª¿Õ£¡£¡");
+		 JOptionPane.showMessageDialog(null, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½");
 		 request.getRequestDispatcher("login.jsp").forward(request, response);
 	 }else {
-	 //´«µÝÊý¾Ý¸øLoginDaoÖÐµÄgetNamePwd()·½·¨
+	 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸ï¿½LoginDaoï¿½Ðµï¿½getNamePwd()ï¿½ï¿½ï¿½ï¿½
     Users ln = null;
 	try {
 		ln = ld.getNamePwd(uname, upwd);
@@ -36,7 +35,7 @@ public class Userservlet extends HttpServlet {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}	   
-	   //ÅÐ¶ÏÊÇ·ñ²éÑ¯³É¹¦
+	   //ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ¯ï¿½É¹ï¿½
 	    	if(ln==null) {
 				request.getRequestDispatcher("field.jsp").forward(request, response);
 			}else {

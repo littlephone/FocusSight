@@ -30,7 +30,7 @@ body{
 <title>My project</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
+<%@include file="../header.jsp"%>
 <div class="title">My FocusSight Projects</div>
 <a href="newproject.jsp" class="add">Create a new project</a>
 <%
