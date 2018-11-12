@@ -10,7 +10,8 @@ import com.focussight.bean.*;
 public class ProjectDao {
 	//Create a java bean
 	public Project project = new Project();
-	SQLToolkit toolkit = new SQLToolkit();
+	public SQLToolkit toolkit = new SQLToolkit();
+	public Users user = new Users();
 	Connection conn = toolkit.Connect();
 	
 	public ProjectDao(int pid) {
@@ -47,13 +48,6 @@ public class ProjectDao {
 		return manage_user.user.getUname();
 	}
 	
-	public String[] getTeamMemberName() {
-		String[] members = null;
-		
-		
-		return members;
-	}
-	
 	public void createProject(String pname, int manage_id, String requirements,
 			float progress, String pintro, String psnapshot) {
 		
@@ -65,4 +59,11 @@ public class ProjectDao {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean isProjectOwner(int userid) {
+		int manager_id = project.getManage_id();		
+		return (userid == manager_id) ? true: false;
+		
+	}
+	
 }

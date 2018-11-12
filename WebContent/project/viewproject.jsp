@@ -5,6 +5,12 @@
 <!DOCTYPE html>
 <%
 	int projectID = Integer.parseInt(request.getParameter("id"));
+	int curruid = 0;
+	Integer userid;
+	
+	if((userid = (Integer)session.getAttribute("id")) != null){
+		curruid = userid;
+	}
 	MemberDao memberdao = new MemberDao(projectID);
 	ProjectDao projectdao = new ProjectDao(projectID);
 	
@@ -13,6 +19,9 @@
 	String screenshot_path = projectdao.project.getPsnapshot();
 	
 	List<String> project_mem_list = memberdao.getMemberList();
+	
+	//Check whether the current user is the owner (leader)
+	boolean isOwner = projectdao.isProjectOwner(curruid);
 %>
 <html>
 <style>
@@ -50,7 +59,7 @@ body{
 	border-radius: 20px;
 }
 .horizontal_wrapper{
-	float: left;
+	display:inline-block;
 	width: 98%;
 	margin-top: 10px;
 	margin: 0 auto;
@@ -66,6 +75,10 @@ body{
 	height: 150px;
 	line-height: 150px;
 	text-align: center;
+}
+.item{
+	display:block;
+	padding: 10px;
 }
 </style>
 <head>
@@ -85,7 +98,7 @@ body{
 </div>
 <%
 if(uname == null){
-	out.print("<div class=\"nolog\">You must login to participate in this project");
+	out.print("<div class=\"nolog\">You must login to participate in this project</div>");
 }else{
 %>
 <div class="horizontal_wrapper">
@@ -94,8 +107,15 @@ if(uname == null){
 			<% if(screenshot_path == null) out.print("No screeshot"); %>
 		</div>
 		<div class="seperator"></div>
-		<a class="item">Forum</a>
-		<a class="item"></a>
+		<%
+		if(isOwner){
+		%>
+		<a class="item" href="projectsettings.jsp?pid=<%=projectID %>">Project Settings</a>
+		<a class="item">Manage Members</a>		
+		<%	
+		}
+		%>
+		
 	</div>
 
 </div>
