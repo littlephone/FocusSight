@@ -25,6 +25,10 @@
 %>
 <html>
 <style>
+a{
+	text-decoration: none;
+}
+
 body{
 	margin: 0;
 }
@@ -59,6 +63,7 @@ body{
 	border-radius: 20px;
 }
 .horizontal_wrapper{
+	position:relative;
 	display:inline-block;
 	width: 98%;
 	margin-top: 10px;
@@ -102,24 +107,27 @@ if(uname == null){
 }else{
 %>
 <div class="horizontal_wrapper">
-	<div class="vertical_menu">
-		<div class="image_place">
-			<% if(screenshot_path == null) out.print("No screeshot"); %>
+<div class="wrapper">
+		<div class="vertical_menu">
+			<div class="image_place">
+				<% if(screenshot_path == null) out.print("No screeshot"); %>
+			</div>
+			<div class="seperator"></div>
+			<%
+			if(isOwner){
+			%>
+			<a class="item" href="projectsettings.jsp?pid=<%=projectID %>">Project Settings</a>
+			<a class="item">Manage Members</a>		
+			<%	
+			}
+			%>
+			<a class="item">Project Requirements</a>
+			<a class="item">Meeting Room</a>
+			<a class="item">Work</a>
 		</div>
-		<div class="seperator"></div>
-		<%
-		if(isOwner){
-		%>
-		<a class="item" href="projectsettings.jsp?pid=<%=projectID %>">Project Settings</a>
-		<a class="item">Manage Members</a>		
-		<%	
-		}
-		%>
-		
+	
 	</div>
-
 </div>
-
 <%}%>
 </body>
 </html>

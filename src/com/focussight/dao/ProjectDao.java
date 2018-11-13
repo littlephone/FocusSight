@@ -61,6 +61,7 @@ public class ProjectDao {
 	}
 	
 	public boolean isProjectOwner(int userid) {
+		//Check whether the current user is the project owner (leader)
 		int manager_id = project.getManage_id();		
 		return (userid == manager_id) ? true: false;
 		
