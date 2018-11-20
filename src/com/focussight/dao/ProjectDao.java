@@ -56,6 +56,8 @@ public class ProjectDao {
 				+ "VALUES (?,?,?,?,?,?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(stmt);
+			pstmt.setString()
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}

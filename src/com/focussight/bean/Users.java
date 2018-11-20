@@ -1,11 +1,18 @@
 package com.focussight.bean;
 
 import java.sql.*;
+//import javax.faces.bean.*;
 import com.focussight.dao.SQLToolkit;
 import java.util.*;
+import javax.faces.*;
+import javax.faces.bean.*;
 import java.sql.Date;
 
+@ManagedBean(name = "users")
+@RequestScoped
+
 public class Users {
+	private String hello = "Hello World";
 	private int userid;
 	private String username;
 	private String password;
@@ -107,5 +114,13 @@ public class Users {
 	
 	public boolean isUserExists() {
 		return this.isUserExists;
+	}
+
+	public String getHello() {
+		return hello;
+	}
+
+	public void setHello(String hello) {
+		this.hello = hello;
 	}
 }
