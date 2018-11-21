@@ -1,4 +1,4 @@
-package com.focussight.servlet;
+package com.focussight.manbean;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
-
 import com.focussight.bean.Users;
-import com.focussight.dao.*;
+import com.focussight.stored.*;
 
 @WebServlet("/Userservlet")
 public class Userservlet extends HttpServlet {
-    LoginDao ld=new LoginDao();
+    LoginStored ld=new LoginStored();
    	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	 request.setCharacterEncoding("UTF-8");

@@ -1,4 +1,4 @@
-package com.focussight.servlet;
+package com.focussight.manbean;
 
 import java.io.IOException;
 import java.sql.*;
@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.focussight.dao.*;
+import com.focussight.stored.*;
 /**
  * Servlet implementation class Login
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-	public UserDao userdao;
+	public UserStored userstored;
 	public Connection conn;
 	
 	private static final long serialVersionUID = 1L;
@@ -53,10 +53,10 @@ public class LoginServlet extends HttpServlet {
 		
 		// V: Connection
 		
-		userdao = new UserDao(username);
+		userstored = new UserStored(username);
 		
-		boolean usernamestat = userdao.checkUser();
-		boolean passwdstat = userdao.passwordVerify(passwd);
+		boolean usernamestat = userstored.checkUser();
+		boolean passwdstat = userstored.passwordVerify(passwd);
 		
 		
 		
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 			//Then the username is correct
 			System.out.println("The user exists"); 
 			
-			int userid = userdao.user.getUid();
+			int userid = userstored.user.getUid();
 			
 			session.setAttribute("username", username);
 			session.setAttribute("id", userid);

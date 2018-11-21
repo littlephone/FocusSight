@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.focussight.dao.SQLToolkit;
+import com.focussight.stored.SQLToolkit;
 
 import java.sql.*;
 

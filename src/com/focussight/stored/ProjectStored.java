@@ -1,4 +1,4 @@
-package com.focussight.dao;
+package com.focussight.stored;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 import com.focussight.bean.*;
 
-public class ProjectDao {
+public class ProjectStored {
 	//Create a java bean
 	public Project project = new Project();
 	public SQLToolkit toolkit = new SQLToolkit();
 	public Users user = new Users();
 	Connection conn = toolkit.Connect();
 	
-	public ProjectDao(int pid) {
+	public ProjectStored(int pid) {
 		
 		//One time initisation when querying database
 		String stmt = "SELECT * FROM project WHERE pid=?";
@@ -44,7 +44,7 @@ public class ProjectDao {
 	
 	public String getManagerUsername() {
 		int manager_id = project.getManage_id();
-		UserDao manage_user = new UserDao(manager_id);
+		UserStored manage_user = new UserStored(manager_id);
 		return manage_user.user.getUname();
 	}
 	

@@ -1,4 +1,4 @@
-package com.focussight.servlet;
+package com.focussight.manbean;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.focussight.dao;
+package com.focussight.stored;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.focussight.bean.Users;
 
 
-public class LoginDao {
+public class LoginStored {
 	private Connection conn = null;
 	private PreparedStatement pst = null;
 	private ResultSet rs = null;

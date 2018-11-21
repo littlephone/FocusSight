@@ -1,16 +1,16 @@
-package com.focussight.dao;
+package com.focussight.stored;
 
 import com.focussight.bean.*;
 import java.sql.*;
 import java.util.Objects;
 
 
-public class UserDao {
+public class UserStored {
 	SQLToolkit toolkit = new SQLToolkit();
 	Connection conn = toolkit.Connect();
 	public Users user = new Users();
 	
-	public UserDao(String username) {
+	public UserStored(String username) {
 		SQLToolkit toolkit = new SQLToolkit();
 		Connection conn = toolkit.Connect();
 		
@@ -39,7 +39,7 @@ public class UserDao {
 			
 		}
 	}
-	public UserDao(int userid) {	
+	public UserStored(int userid) {	
 		String usersql = "SELECT * FROM users WHERE userid = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(usersql);
