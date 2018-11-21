@@ -1,7 +1,5 @@
 package com.focussight.bean;
 
-import com.focussight.dao.*;
-import java.sql.*;
 
 public class Project {
 	private int pid;
