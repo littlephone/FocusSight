@@ -1,13 +1,16 @@
 package com.focussight.manbean;
 
 import javax.faces.bean.*;
+import javax.swing.JOptionPane;
 
-@ManagedBean(name="login")
+@ManagedBean (name="loginmbean")
 @SessionScoped
 
 public class LoginMBean {
 	private String username;
 	private String password;
+	private String hello="hello1";
+	private String message;
 	
 	public LoginMBean() {
 		//Do nothing
@@ -28,11 +31,19 @@ public class LoginMBean {
 	}
 	
 	public void verifyData() {
-		
+		System.out.println("hello world");
 	}
 	
 	public String getUIContent() {
 		return null;
+	}
+
+	public String getHello() {
+		return hello;
+	}
+
+	public void setHello(String hello) {
+		this.hello = hello;
 	}
 
 }
