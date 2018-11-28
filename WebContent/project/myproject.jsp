@@ -45,6 +45,9 @@ body{
 	List<Map> maplist = ps.getProjectProp(userid);
 	
 	for(Map mapitem : maplist){
+		int pid = (int) mapitem.get("pid");
+		String pname = (String) mapitem.get("pname");
+		out.println("<a href=\"viewproject.jsp?id="+pid+"\">"+pname+"</a>");
 		
 	}
 	
