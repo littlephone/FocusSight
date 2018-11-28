@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.focussight.dao.SQLToolkit" %>
-<%@ page import="java.sql.*" %>
+<%@ page import="com.focussight.stored.SQLToolkit" %>
+<%@ page import="java.sql.*, com.focussight.manbean.*" %>
 
 <%
 	//Before we start, we need to get the current session
+	MyProjectMBean pb = new MyProjectMBean();
+	
+
 	String username = (String)session.getAttribute("username");
 	int uid = (Integer)session.getAttribute("id");
 	System.out.println(uid);

@@ -10,7 +10,12 @@
 <title>test</title>
 <f:view>
 <h:form>
-hello world
+<% for(int i=0; i<3;i++){ %>
+hello world<% out.println(i); 
+
+}%>
+<h:outputText value="#{users.hello}"></h:outputText>
+
 </h:form>
 </f:view>
 </head>

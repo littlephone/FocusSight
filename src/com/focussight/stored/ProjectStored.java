@@ -1,9 +1,9 @@
 package com.focussight.stored;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.focussight.bean.*;
 
@@ -15,11 +15,35 @@ public class ProjectStored {
 	Connection conn = toolkit.Connect();
 	
 	public ProjectStored(int pid) {
+		selectProjectPropByID(pid);	
+	}
+	public ProjectStored() {
+		//DO NOTHING
+		//Query First, then stores
 		
+	}
+	
+	public ArrayList<Integer> getUserOwnedProjectID(int uid){
+		String sql = "SELECT * FROM project WHERE manage_id="+ uid + ";";
+		ArrayList<Integer> projectID = new ArrayList<Integer>();
+		
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				projectID.add(rs.getInt("pid"));
+			}
+		}catch(SQLException e) {
+			
+		}
+		
+		return projectID;
+	}
+	public void selectProjectPropByID(int pid) {
 		//One time initisation when querying database
 		String stmt = "SELECT * FROM project WHERE pid=?";
 
-		
+				
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(stmt);
 			pstmt.setInt(1, pid);
@@ -34,9 +58,9 @@ public class ProjectStored {
 			project.setProgress(rs.getFloat("progress"));
 			project.setPintro(rs.getString("pintro"));
 			project.setPsnapshot(rs.getString("psnapshot"));
-			
+					
 			conn.close();
-			
+					
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}

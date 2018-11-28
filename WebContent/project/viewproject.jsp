@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page import="com.focussight.dao.* , java.util.*" %>
+<%@ page import="com.focussight.stored.* , java.util.*" %>
 <!DOCTYPE html>
 <%
 	int projectID = Integer.parseInt(request.getParameter("id"));
@@ -11,8 +11,8 @@
 	if((userid = (Integer)session.getAttribute("id")) != null){
 		curruid = userid;
 	}
-	MemberDao memberdao = new MemberDao(projectID);
-	ProjectDao projectdao = new ProjectDao(projectID);
+	MemberStored memberdao = new MemberStored(projectID);
+	ProjectStored projectdao = new ProjectStored(projectID);
 	
 	String project_name = projectdao.project.getPname();
 	String project_leader = projectdao.getManagerUsername();
