@@ -4,16 +4,15 @@
 xmlns:h="http://java.sun.com/jsf/html"
 xmlns:f="http://java.sun.com/jsf/core">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Hello World</title>
+	<meta charset="UTF-8"></meta>
+<title>My FocusSight project</title>
+<style>
+body{
+	margin:0;
+}
+</style>
 </head>
 <body>
-
-<div>#{users.hello}</div>
-<h:form>
-#{loginmbean.hello}
-<h:commandButton value="注册" action="#{loginmbean.verifyData}"> </h:commandButton>
-</h:form>
-
+<ui:include src="../header.jsp" />
 </body>
 </html>

@@ -5,4 +5,30 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
     version="2.3">
 
+<managed-bean>
+        <managed-bean-name>UserBean</managed-bean-name>
+        <managed-bean-class>
+            my.UserBean
+        </managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <navigation-rule>
+    <description>
+    out
+    </description>
+    <from-view-id>/NewFile.jsp</from-view-id>
+    
+    <navigation-case>
+    <from-outcome>success</from-outcome>
+    <to-view-id>/welcome.jsp</to-view-id>
+    </navigation-case>
+    
+    <navigation-case>
+    <from-outcome>failure</from-outcome>
+    <to-view-id>/index.jsp</to-view-id>
+    </navigation-case>
+    </navigation-rule>
+
+
+
 </faces-config>

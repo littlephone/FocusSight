@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.focussight.bean.Users;
-import com.focussight.dao.*;
+import com.focussight.stored.*;
+
 import java.sql.*;
 
 /**

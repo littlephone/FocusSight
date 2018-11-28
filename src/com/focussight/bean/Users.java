@@ -2,7 +2,7 @@ package com.focussight.bean;
 
 import java.sql.*;
 //import javax.faces.bean.*;
-import com.focussight.dao.SQLToolkit;
+import com.focussight.stored.*;
 import java.util.*;
 import javax.faces.bean.*;
 import java.sql.Date;

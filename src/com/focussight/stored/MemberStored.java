@@ -1,10 +1,10 @@
-package com.focussight.dao;
+package com.focussight.stored;
 
 import com.focussight.bean.*;
 import java.sql.*;
 import java.util.*;
 
-public class MemberDao {
+public class MemberStored {
 
 	//Initialise Member Bean
 	Member member = new Member();
@@ -12,7 +12,7 @@ public class MemberDao {
 	SQLToolkit toolkit = new SQLToolkit();
 	Connection conn = toolkit.Connect();
 	
-	public MemberDao(int pid, int mid) {
+	public MemberStored(int pid, int mid) {
 		//Set project number
 		this.pid = pid;
 		//Initialise specific information on specific user in given project number
@@ -32,7 +32,7 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 	}
-	public MemberDao(int pid) {
+	public MemberStored(int pid) {
 		this.pid = pid;
 	}
 	public List<String> getMemberList() {
