@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15427273000160" configfile="/FocusSight/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15427273000160" configfile="/ROOT/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="NewFile" comment="out" id="pf15433825464330" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15433825464331 pf15433826429863" path="/NewFile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="welcome" id="pf15433825464332" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15433825464331" path="/welcome.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="index" id="pf15433826429874" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15433826429863" path="/index.jsp"/>
+  <links id="pf15433825464331" target="pf15433825464332" source="pf15433825464330" outcome="success"/>
+  <links id="pf15433826429863" target="pf15433826429874" source="pf15433825464330" outcome="failure"/>
+</pageflow:Pageflow>
