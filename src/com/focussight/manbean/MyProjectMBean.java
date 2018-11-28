@@ -4,6 +4,12 @@ import com.focussight.stored.*;
 import com.focussight.bean.*;
 import java.util.*;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+
+@ManagedBean (name="myprojectbean")
+@SessionScoped
 public class MyProjectMBean {
 	public ProjectStored ps = new ProjectStored();
 	private int userid;
@@ -21,5 +27,11 @@ public class MyProjectMBean {
 		projectIDList = ps.getUserOwnedProjectID(userid);
 		
 		ps.selectProjectPropByID(pid);
+	}
+	
+	public void testproject()
+	{
+		ProjectStored stored=new ProjectStored();
+		stored.CallStmt();
 	}
 }

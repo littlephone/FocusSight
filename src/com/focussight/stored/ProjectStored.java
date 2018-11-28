@@ -1,11 +1,14 @@
 package com.focussight.stored;
 
 import java.sql.*;
+import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.focussight.bean.*;
+
+import oracle.jdbc.internal.OracleTypes;
 
 public class ProjectStored {
 	//Create a java bean
@@ -13,6 +16,7 @@ public class ProjectStored {
 	public SQLToolkit toolkit = new SQLToolkit();
 	public Users user = new Users();
 	Connection conn = toolkit.Connect();
+	ResultSet rs = null;
 	
 	public ProjectStored(int pid) {
 		selectProjectPropByID(pid);	
@@ -92,5 +96,40 @@ public class ProjectStored {
 		int manager_id = project.getManage_id();		
 		return (userid == manager_id) ? true: false;
 		
+	}
+	public void CallStmt() {
+		try{
+			CallableStatement cstmt = conn.prepareCall("{call ProjectCheck}");
+			cstmt.execute();
+			System.out.println("Running here");
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error occured");
+		}
+	}
+	
+	public List<Map> getProjectProp(int uid) {
+		List<Map> list = new ArrayList<Map>();
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL showProject(?,?)}");
+			cstmt.setInt(1,uid);
+			cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+			cstmt.execute();
+			rs = (ResultSet) cstmt.getObject(2);
+			while(rs.next()) {
+				Map map = new HashMap();
+				map.put("pid", rs.getInt("pid"));
+				map.put("pname", rs.getString("pname"));
+				map.put("manager_id", rs.getString("manager_id"));
+				map.put("requirements", rs.getString("requirements"));
+				map.put("progress", rs.getFloat("progress"));
+				map.put("pintro", rs.getString("pintro"));
+				map.put("psnapshot", rs.getString("psnapshot"));
+				list.add(map);
+			}
+			
+		}catch(SQLException e) {}
+		return list;
 	}
 }
