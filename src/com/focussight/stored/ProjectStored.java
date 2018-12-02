@@ -132,4 +132,12 @@ public class ProjectStored {
 		}catch(SQLException e) {}
 		return list;
 	}
+	public void insertProjectRecordd(Map Project) {
+		
+		String projectName = (String) Project.get("pname");
+		int manager_id = (int) Project.get("manage_id");
+		String requirements = (String) Project.get("requirements");
+		float progress = (float) Project.get("progress");
+		
+	}
 }

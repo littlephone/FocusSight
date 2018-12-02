@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
+<%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,6 +29,7 @@ body{
 
 <form method="POST" action="CreateProject">
 
+<div>Project Name: <h:inputText value="#{ }"></h:inputText></div>
 <div>Project Name: <input type="text" class="projectname" name="projectname"/></div>
 
 <div>Description or Requirements:
