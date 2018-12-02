@@ -25,6 +25,7 @@ body{
 
 <div>Tell us about your idea.</div>
 
+
 <h:form>
 	<div>Project Name: <h:inputText  value="#{projectmbean.pname}"></h:inputText></div>
 	<div>Please give us a brief introduction to your project<br/>
