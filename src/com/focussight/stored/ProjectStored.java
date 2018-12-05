@@ -77,18 +77,25 @@ public class ProjectStored {
 	}
 	
 
-	public void createProject(String pname, int manage_id, String requirements,
-			float progress, String pintro, String psnapshot) {
-		
-		String stmt = "INSERT INTO project (pname, manage_id, requirements, progress, pintro, psnapshot)"
-				+ "VALUES (?,?,?,?,?,?)";
+	public int createProject(String pname, int manager_id, String requirements,
+			 String pintro, String psnapshot) {
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(stmt);
-			//pstmt.setString()
+			CallableStatement cs = conn.prepareCall("{CALL createProject(?,?,?,?,?,?)}");
+			cs.setString(1, pname);
+			cs.setInt(2, manager_id);
+			cs.setString(3	, requirements);
+			cs.setString(4, pintro);
+			cs.setString(5, psnapshot);
+			cs.registerOutParameter(6, OracleTypes.NUMBER);
+			cs.execute();
+			int pid = cs.getInt(6);
+			System.out.print("werwewetwefwetwe4ewtewtewt:"+ pid);
+			return pid;
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		return 0;
 	}
 
 	public boolean isProjectOwner(int userid) {
@@ -109,8 +116,8 @@ public class ProjectStored {
 		}
 	}
 	
-	public List<Map> getProjectProp(int uid) {
-		List<Map> list = new ArrayList<Map>();
+	public List<Map<String, Object>> getProjectProp(int uid) {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		try {
 			CallableStatement cstmt = conn.prepareCall("{CALL showProject(?,?)}");
 			cstmt.setInt(1,uid);
@@ -118,7 +125,7 @@ public class ProjectStored {
 			cstmt.execute();
 			rs = (ResultSet) cstmt.getObject(2);
 			while(rs.next()) {
-				Map map = new HashMap();
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("pid", rs.getInt("pid"));
 				map.put("pname", rs.getString("pname"));
 				map.put("manager_id", rs.getString("manager_id"));

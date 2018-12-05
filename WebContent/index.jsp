@@ -29,8 +29,8 @@ body{
 <%
 if(uname != null){
 %>
-<a href="project/myproject.jsp"> 我的项目 My project </a>
-<a href="manage.jsp">My information</a>
+<a href="project/myproject.jsf"> 我的项目 My project </a>
+<a href="manage.jsf">My information</a>
 <%} %>
 </body>
 </html>
