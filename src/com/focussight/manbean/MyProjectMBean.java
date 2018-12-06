@@ -20,6 +20,7 @@ public class MyProjectMBean {
 	private int userid = (int) session.getAttribute("userid");
 	
 	public Project project = ps.project;
+
 	public List<Map<String, Object>> userOwnedProject;
 
 	public int getUserid() {
@@ -37,8 +38,4 @@ public class MyProjectMBean {
 		userOwnedProject= ps.getProjectProp(userid);
 		return userOwnedProject;
 	}
-	public void setUserOwnedProject(List<Map<String, Object>> project) {
-		userOwnedProject = project;
-	}
-	
 }

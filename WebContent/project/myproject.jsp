@@ -3,7 +3,6 @@
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%@ page import="com.focussight.stored.SQLToolkit" %>
 <%@ page import="java.sql.*, 
 				com.focussight.manbean.*, 
@@ -27,7 +26,6 @@
 	List<Map<String, Object>> maplist = ps.getProjectProp(userid);
 	pageContext.setAttribute("maplist", maplist);
 	pageContext.setAttribute("userid", userid);
-	
 %>
 
 <!DOCTYPE html>
@@ -86,7 +84,10 @@ a{
 	</a>
 </c:forEach>
 <!-- 
+<<<<<<< HEAD
 >>>>>>> CAUSAL UPLOAD
+=======
+>>>>>>> c71fa41b7ae82bb79776ca509a4bff9933b14e32
 	for(Map mapitem : maplist){
 		int pid = (int) mapitem.get("pid");
 		String pname = (String) mapitem.get("pname");
@@ -104,6 +105,7 @@ a{
 		</a>
 			
 	}
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 %> 

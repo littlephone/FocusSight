@@ -82,4 +82,3 @@ public class ProjectMBean {
 		return str;
 	}
 }
-
