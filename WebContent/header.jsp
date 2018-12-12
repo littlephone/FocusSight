@@ -14,7 +14,7 @@
 }
 </style>
 <div class='header'>
-<a class="toplink" href="/FocusSight/index.jsp">FocusSight</a>
+<a class="toplink" href="/FocusSight/index.jsf">FocusSight</a>
 <a class="toplink">viewProjectByCatagory()</a>
 <a class="toplink">How does it work?</a>
 <%
@@ -25,7 +25,7 @@ if(uname != null){
 	out.println("<a class=\"toplink\" href=\"LogoutServlet\">Logout</a>");
 }else{
 %>
-<a class="toplink" href="/FocusSight/login.jsp">Login</a>
+<a class="toplink" href="/FocusSight/login.jsf">Login</a>
 <a class="toplink">New to here? Register</a>
 <%}%>
 </div>

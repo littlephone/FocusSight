@@ -19,7 +19,7 @@ public class ProjectStored {
 	ResultSet rs = null;
 	
 	public ProjectStored(int pid) {
-		selectProjectPropByID(pid);	
+		getProjectByPid(pid);	
 	}
 	public ProjectStored() {
 		//DO NOTHING
@@ -43,31 +43,34 @@ public class ProjectStored {
 		
 		return projectID;
 	}
-	public void selectProjectPropByID(int pid) {
-		//One time initisation when querying database
-		String stmt = "SELECT * FROM project WHERE pid=?";
-
-				
+	public Map<String, Object> getProjectByPid(int pid)  {
+		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(stmt);
-			pstmt.setInt(1, pid);
-			ResultSet rs = pstmt.executeQuery();
+			//One time initisation when querying database
+	 		CallableStatement cs = conn.prepareCall("{CALL XPROJECT(?,?,?,?)}");
+			cs.setInt(1, 2);
+			cs.setInt(2, pid);
+			cs.setInt(3, 0);
+			cs.registerOutParameter(4, OracleTypes.CURSOR);
+			cs.execute();
+			rs = (ResultSet) cs.getObject(4);
 			rs.next();
 			
-			//Setting values 
-			project.setPid(pid);
+			//Because the previous function sets the Project bean, we keep it here...
+			project.setPid(rs.getInt("pid"));
 			project.setPname(rs.getString("pname"));
 			project.setManage_id(rs.getInt("manager_id"));
-			project.setRequirements(rs.getString("requirements"));
-			project.setProgress(rs.getFloat("progress"));
-			project.setPintro(rs.getString("pintro"));
-			project.setPsnapshot(rs.getString("psnapshot"));
-					
-			conn.close();
-					
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
+				
+			map.put("pid", rs.getInt("pid"));
+			map.put("pname", rs.getString("pname"));
+			map.put("manager_id", rs.getString("manager_id"));
+			map.put("requirements", rs.getString("requirements"));
+			map.put("progress", rs.getFloat("progress"));
+			map.put("pintro", rs.getString("pintro"));
+			map.put("psnapshot", rs.getString("psnapshot"));
+				
+		}catch(Exception e) {}
+		return map;
 	}
 	
 	public String getManagerUsername() {
@@ -76,7 +79,25 @@ public class ProjectStored {
 		return manage_user.user.getUname();
 	}
 	
-
+	public List<Map<String, Object>> getAllProjects() throws SQLException{
+		List<Map<String, Object>> projects = new ArrayList<Map<String, Object>>();
+		CallableStatement css = conn.prepareCall("{CALL GETALLPROJECT(?)}");
+		css.registerOutParameter(1, OracleTypes.CURSOR);
+		css.execute();
+		rs = (ResultSet) css.getObject(1);
+		while(rs.next()) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("pid", rs.getInt("pid"));
+			map.put("pname", rs.getString("pname"));
+			map.put("manager_id", rs.getString("manager_id"));
+			map.put("requirements", rs.getString("requirements"));
+			map.put("progress", rs.getFloat("progress"));
+			map.put("pintro", rs.getString("pintro"));
+			map.put("psnapshot", rs.getString("psnapshot"));
+			projects.add(map);
+			}
+		return projects;
+	}
 	public int createProject(String pname, int manager_id, String requirements,
 			 String pintro, String psnapshot) {
 		try {

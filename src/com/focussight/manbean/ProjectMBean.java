@@ -4,6 +4,8 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import java.sql.*;
+import java.util.*;
 import com.focussight.stored.*;
 
 @ManagedBean (name="projectmbean")
@@ -18,7 +20,15 @@ public class ProjectMBean {
 	private float progress;
 	private String pintro ;
 	private String psnapshot = "haha";
+	private List<Map<String, Object>> projectmap;
+	public ProjectStored ps = new ProjectStored();
 	
+	public List<Map<String, Object>> getProjectmap() {
+		return projectmap;
+	}
+	public void setProjectmap(List<Map<String, Object>> projectmap) {
+		this.projectmap = projectmap;
+	}
 	public int getPid() {
 		return pid;
 	}
@@ -72,7 +82,7 @@ public class ProjectMBean {
 		HttpSession hs = (HttpSession)fc.getExternalContext().getSession(true);
 		setManager_id((int)hs.getAttribute("userid"));
 		
-		ProjectStored ps = new ProjectStored();
+		
 		int result = ps.createProject(pname, manager_id, requirements, pintro, psnapshot);
 		
 		setPid(result);
@@ -80,5 +90,8 @@ public class ProjectMBean {
 		String str = "viewproject.jsf?id="+ getPid();
 		System.out.println("4r2r2r23r2r23");
 		return str;
+	}
+	public void showProjects()  throws SQLException{
+		setProjectmap(ps.getAllProjects());
 	}
 }
