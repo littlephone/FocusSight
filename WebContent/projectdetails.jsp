@@ -5,7 +5,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.sql.*,
 								  java.util.*, 
-								 com.focussight.stored.*" %>
+								 com.focussight.stored.*, 
+								 javax.faces.context.*" %>
 
 <!DOCTYPE html>
 <html>
@@ -16,17 +17,23 @@
 		return;
 	}
 	int projectID = Integer.parseInt(request.getParameter("id"));
+	FacesContext facesContext = FacesContext.getCurrentInstance();
+	Object o = facesContext.getApplication().evaluateExpressionGet(facesContext,
+            "#{phaseListenerBean}", Object.class);
+	
 	ProjectStored stored = new ProjectStored();
 	Map<String, Object> projectMap = stored.getProjectByPid(projectID);
 	pageContext.setAttribute("projectMap", projectMap);
 %>
 
-<title>Insert title here</title>
+<title>Join project ${projectMap.pname} - Labstry FocusSight</title>
 </head>
 <body>
-${projectMap.pid} <br/>
-${projectMap.pname}<br/>
-${projectMap.pintro}
-<a href="addproject.jsf?action=add">Add</a>
+<%@include file="header.jsp"%>
+<div>
+<h1>${projectMap.pname}</h1>
+Introduction: ${projectMap.pintro}
+<a href="addproject.jsf?action=add">Join</a>
+</div>
 </body>
 </html>

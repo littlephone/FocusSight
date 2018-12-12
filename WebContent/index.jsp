@@ -47,7 +47,9 @@ if(uname != null){
 <div>
 Projects:
 <c:forEach items="${list}" var="map">
-	<a href="project/projectdetail.jsf?id=${map.pid}">${map.pname}</a>
+	<a href="projectdetails.jsf?id=${map.pid}">${map.pname} <br/>
+		
+	</a>
 </c:forEach>
 </div>
 </f:view>
