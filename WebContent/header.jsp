@@ -19,9 +19,10 @@
 <a class="toplink">How does it work?</a>
 <%
 String uname = (String)session.getAttribute("username");
-int id = (Integer)session.getAttribute("id");
+int id = (Integer)session.getAttribute("userid");
 if(uname != null){
-	out.println("<a class=\"toplink\">" + uname + "</a>");
+	out.println("<a class=\"toplink\" href=\"manage.jsf\">" + uname + "</a>");
+	
 	out.println("<a class=\"toplink\" href=\"LogoutServlet\">Logout</a>");
 }else{
 %>
