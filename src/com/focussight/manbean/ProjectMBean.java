@@ -21,9 +21,27 @@ public class ProjectMBean {
 	private String pintro ;
 	private String psnapshot = "haha";
 	private List<Map<String, Object>> projectmap;
+	private Map<String,Object> projectdetails;
+	
+	public Map<String, Object> getProjectdetails() {
+		//Injection method to check project details, then return
+		try {
+			projectdetails = ps.getProjectByPid(pid);
+		}catch(Exception e) {}
+		return projectdetails;
+	}
+	public void setProjectdetails(Map<String, Object> projectdetails) {
+		
+		this.projectdetails = projectdetails;
+	}
 	public ProjectStored ps = new ProjectStored();
 	
 	public List<Map<String, Object>> getProjectmap() {
+		//Injection method to check project details, then return
+		try {
+			projectdetails = ps.getProjectByPid(pid);
+		}catch(Exception e) {}
+		
 		return projectmap;
 	}
 	public void setProjectmap(List<Map<String, Object>> projectmap) {

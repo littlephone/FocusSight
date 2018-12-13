@@ -168,4 +168,16 @@ public class ProjectStored {
 		float progress = (float) Project.get("progress");
 		
 	}
+	public boolean joinProject(int pid, int userid) {
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL JOINPROJECT(?,?)}");
+			cstmt.setInt(1, pid);
+			cstmt.setInt(2, userid);
+			cstmt.execute();
+			return true;
+		}catch(SQLException sqle) {
+			return false;
+		}
+		
+	}
 }

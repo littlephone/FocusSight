@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ page import="java.sql.*,
 								  java.util.*, 
 								 com.focussight.stored.*, 
@@ -10,30 +10,60 @@
 
 <!DOCTYPE html>
 <html>
+<style>
+body{
+	margin:0;
+}
+.introwrapper{
+	border-radius: 18px;
+	border: 1px solid grey;
+	width: 98%;
+	min-height: 400px;
+	margin: 0 auto;
+	margin-top: 50px;
+	overflow-x:hidden;
+}
+.introinnerwrapper{
+	width:100%;
+	height:100%;
+}
+.coloredwrapper{
+	background-color: #00c5ff;
+	padding:100px;
+}
+.projecttitle{
+	font-size:28px;
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <%
-	if(Integer.parseInt(request.getParameter("id"))== 0){
+	int userid;
+	if((userid = Integer.parseInt(request.getParameter("id")))== 0){
 		return;
 	}
 	int projectID = Integer.parseInt(request.getParameter("id"));
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	Object o = facesContext.getApplication().evaluateExpressionGet(facesContext,
-            "#{phaseListenerBean}", Object.class);
 	
-	ProjectStored stored = new ProjectStored();
-	Map<String, Object> projectMap = stored.getProjectByPid(projectID);
-	pageContext.setAttribute("projectMap", projectMap);
+	pageContext.setAttribute("userid", userid);
+	pageContext.setAttribute("projectid", projectID);
 %>
+<c:set target="${projectmbean}" property="pid" value="${projectid}"/>
+<c:set value="${projectmbean.projectdetails}" var="map"/>
 
-<title>Join project ${projectMap.pname} - Labstry FocusSight</title>
+<title>Join project ${map.pname} - Labstry FocusSight</title>
 </head>
 <body>
+<f:view>
 <%@include file="header.jsp"%>
-<div>
-<h1>${projectMap.pname}</h1>
-Introduction: ${projectMap.pintro}
-<a href="addproject.jsf?action=add">Join</a>
+<div class="introwrapper">
+	<div class="introinnerwrapper">
+		<div class="coloredwrapper">
+			<div class="projecttitle">${map.pname}</div>
+			Introduction: ${map.pintro}
+		</div>
+		<a href="joinproject.jsf?action=request&id=${userid}&project=${map.pid}">Join</a>
+	</div>
 </div>
+</f:view>
 </body>
 </html>
