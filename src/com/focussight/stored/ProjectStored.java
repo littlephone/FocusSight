@@ -136,6 +136,23 @@ public class ProjectStored {
 			System.out.println("Error occured");
 		}
 	}
+	public boolean alterProjectProp(Map<String, Object> projectmap) {
+		int pid =(int) projectmap.get("pid");
+		String pname = (String) projectmap.get("pname");
+		String pintro = (String) projectmap.get("pintro");
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL EDITGENERALPROJECT(?,?,?,?)}");
+			cstmt.setInt(1, 1);
+			cstmt.setInt(2,pid);
+			cstmt.setString(3, pname);
+			cstmt.setString(4, pintro);
+			cstmt.execute();
+			return true;
+		}catch(SQLException sqle) {
+			sqle.printStackTrace();
+			return false;
+		}
+	}
 	
 	public List<Map<String, Object>> getProjectProp(int uid) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();

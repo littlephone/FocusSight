@@ -122,4 +122,13 @@ public class ProjectMBean {
 	public void showProjects()  throws SQLException{
 		setProjectmap(ps.getAllProjects());
 	}
+	public String AlterProjectBySettings() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pid", pid);
+		map.put("pname", pname);
+		map.put("pintro", pintro);
+		return (ps.alterProjectProp(map) == true) ?
+				"projectsettings.jsf?pid=5&type=general&result=success":
+				"projectsettings.jsf?pid=5&type=general&result=failure";
+	}
 }

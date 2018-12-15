@@ -59,17 +59,25 @@ a{
 .projectwrapper{
 	padding: 10px;
 }
+.contentswrapper{
+	padding: 10px;
+}
 </style>
 <meta charset="UTF-8">
 <title>My project</title>
 </head>
 <body>
-<%@include file="../header.jsp"%>
+<%@include file="header.jsp"%>
 <f:view>
 <div class="title">My FocusSight Projects</div>
 <a href="newproject.jsf" class="add">Create a new project</a>
 <c:forEach items="${maplist}" var="mapitem">
-	<a href="viewproject.jsf?id=${mapitem.pid}">${mapitem.pname}</a>
+	<a class="item" href="viewproject.jsf?id=${mapitem.pid}">
+		<div class="contentswrapper">
+			<div>${mapitem.pname}</div>
+			<div>${mapitem.pintro}</div>
+		</div>
+	</a>
 </c:forEach>
 <!--
 %

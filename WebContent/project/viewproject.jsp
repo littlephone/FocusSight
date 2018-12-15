@@ -155,9 +155,9 @@ body{
 			</div>
 			<div class="seperator"></div>
 			<c:if test="${membermbean.projectleader == true}">
-			<a class="item" href="projectsettings.jsp?pid=${projectid}">Project Settings</a>
+			<a class="item" href="projectsettings.jsf?pid=${projectid}">Project Settings</a>
 			<a class="item">Manage Members</a>	
-			<a class="item">Project Status</a>
+			<a class="item" href="projectstatus.jsf?pid=${projectid}">Project Status</a>
 			</c:if>
 			<a class="item">Project Requirements</a>
 			<a class="item">Meeting Room</a>
