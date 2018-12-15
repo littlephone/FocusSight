@@ -11,12 +11,13 @@
 </head>
 
 <%
-	int userid;
-	int projectid;
-	if(((userid = Integer.parseInt(request.getParameter("id")))== 0) ||
-	   ((projectid = Integer.parseInt(request.getParameter("project"))) ==0) 
-		) 
+	if(request.getParameter("id") == null || request.getParameter("project") == null)
 		return;
+	
+
+	int userid = Integer.parseInt(request.getParameter("id"));
+	int projectid  = Integer.parseInt(request.getParameter("project"));
+	
 	//Now we got userid and requested project ID, let's call join project
 	ProjectStored stored = new ProjectStored();
 	boolean isProjectJoinRequested = stored.joinProject(projectid, userid);

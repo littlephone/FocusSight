@@ -1,6 +1,8 @@
 package com.focussight.stored;
 
 import com.focussight.bean.*;
+
+import oracle.jdbc.*;
 import java.sql.*;
 import java.util.*;
 
@@ -35,8 +37,25 @@ public class MemberStored {
 	public MemberStored(int pid) {
 		this.pid = pid;
 	}
+	public boolean isProjectMember(int uid) {
+		System.out.print("OUT");
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL ISUSERTEAMMEMBER(?,?,?)}");
+			cstmt.setInt(1, pid);
+			cstmt.setInt(2, uid);
+			cstmt.registerOutParameter(3, OracleTypes.NUMBER);
+			cstmt.execute();
+			int isMember = cstmt.getInt(3);
+			System.out.print("HERER"+isMember);
+			return (isMember == 0)? false: true;
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}	
 	public List<String> getMemberList() {
-		String stmt = "SELECT u.username AS username FROM member m, users u WHERE pid = ? AND m.mid = u.userid";
+		String stmt = "SELECT u.username AS username FROM member m, users u WHERE pid = ? AND m.mid = u.userid AND status = 1";
 		List<String> mem_list = new ArrayList<String>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(stmt);

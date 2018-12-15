@@ -20,6 +20,17 @@ public class ProjectMBean {
 	private float progress;
 	private String pintro ;
 	private String psnapshot = "haha";
+	private String leader;
+	
+	public ProjectStored ps = new ProjectStored();
+	
+	public String getLeader() {
+		leader = ps.getManagerUsername();
+		return leader;
+	}
+	public void setLeader(String leader) {
+		this.leader = leader;
+	}
 	private List<Map<String, Object>> projectmap;
 	private Map<String,Object> projectdetails;
 	
@@ -34,7 +45,6 @@ public class ProjectMBean {
 		
 		this.projectdetails = projectdetails;
 	}
-	public ProjectStored ps = new ProjectStored();
 	
 	public List<Map<String, Object>> getProjectmap() {
 		//Injection method to check project details, then return
