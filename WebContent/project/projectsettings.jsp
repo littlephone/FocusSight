@@ -102,6 +102,17 @@ body{
 	border: 2px solid #00c5ff;
 	border-radius: 24px;
 }
+.pidhidden, .text-area{
+	display:none;
+}
+.colorededit{
+	border: 1px solid orange;
+	border-radius: 18px;
+	min-height: 300px;
+	width: 98%;
+	margin: 0 auto;
+	padding: 10px;
+}
 </style>
 <head>
 <meta charset="UTF-8">
@@ -135,7 +146,7 @@ body{
 		<c:if test="${page == 'general'}">
 			<%-- The code here is displayed when user choose 'general' tab --%>
 			<div class="noticetitle">General Settings</div>
-			<div>You changed your mind? It doesn't matter.</div><br/>
+			<div>It doesn't matter if you change your mind.</div><br/>
 			<div class="item">
 				<c:set target="${projectmbean}" property="pid" value="${projectid}"/>
 				<c:set value="${projectmbean.projectdetails}" var="map"/>
@@ -144,15 +155,33 @@ body{
 				<c:set target="${projectmbean}" property="pintro" value="${map.pintro}"/>
 				<h:form>
 					<%-- Display it to user --%>
+					<h:inputText styleClass="pidhidden" value="#{projectmbean.pid}"></h:inputText>
 					Project Name: <h:inputText styleClass="text-input" value="#{projectmbean.pname}"></h:inputText><br/>
 					Project Intro: <br/>
-					<h:inputTextarea value="#{projectmbean.pintro}"></h:inputTextarea><br/>
+					<div class="colorededit" contenteditable="true">
+					
+					</div>
+					<h:inputTextarea value="#{projectmbean.pintro}" styleClass="text-area"></h:inputTextarea><br/>
 					<h:commandButton type="submit" value="Enter" action="#{projectmbean.AlterProjectBySettings}"/>
 				</h:form>
 			</div>
 		</c:if>
+		<c:if test="${page == 'options'}">
+			<%-- The code here is displayed when user choose 'general' tab --%>
+			<div class="noticetitle">Project Options</div>
+			<div>Options, within your reach.</div><br/>
+			
+		</c:if>
+		
 	</div>
 </div>
 </f:view>
 </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$('.colorededit').text($('.text-area').text());
+$(".colorededit").on('DOMSubtreeModified', function() {
+    $('.text-area').text($('.colorededit').text());
+});
+</script>
 </html>

@@ -128,7 +128,7 @@ public class ProjectMBean {
 		map.put("pname", pname);
 		map.put("pintro", pintro);
 		return (ps.alterProjectProp(map) == true) ?
-				"projectsettings.jsf?pid=5&type=general&result=success":
-				"projectsettings.jsf?pid=5&type=general&result=failure";
+				"projectsettings.jsf?pid=5&type=general&result=success&faces-redirect=true":
+				"projectsettings.jsf?pid=5&type=general&result=failure&faces-redirect=true";
 	}
 }
