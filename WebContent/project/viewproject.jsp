@@ -15,7 +15,7 @@
 	String username = null;
 	int curruid = 0;
 	if(session.getAttribute("id") != null){
-		userid = (Integer)session.getAttribute("id");
+		userid = (Integer)session.getAttribute("userid");
 		username = (String)session.getAttribute("username");
 		curruid = userid;
 	}
@@ -38,9 +38,9 @@
 	pageContext.setAttribute("username", username);
 	pageContext.setAttribute("screenshot", screenshot_path);
 %>
-<c:set target="${membermbean}" property="userid" value="${userid}"/>
-<c:set target="${membermbean}" property="projectid" value="${projectid}"/>
-<c:set target="${projectmbean}" property="pid" value="${projectid}"/>
+<c:set target="${membermbean}" property="userid" value="${userid}"></c:set>
+<c:set target="${membermbean}" property="projectid" value="${projectid}"></c:set>
+<c:set target="${projectmbean}" property="pid" value="${projectid}"></c:set>
 
 <%-- Is time for us to get the project map --%> 
 <c:set value="${projectmbean.projectdetails}" var="map"/>
@@ -161,7 +161,8 @@ body{
 			</c:if>
 			<a class="item">Project Requirements</a>
 			<a class="item">Meeting Room</a>
-			<a class="item">Work </a>
+			<a class="item">Upload</a>
+			<a class="item">Resource</a>
 		</div>
 	</div>
 	<div class="noticeboard">

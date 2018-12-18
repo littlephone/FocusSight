@@ -137,7 +137,7 @@ body{
 			<a class="item" href="viewproject.jsf?id=${projectid}">&lt; Back</a>
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=general">General Settings</a>
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=options">Project Options</a>	
-			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=progress">Progress</a>
+			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=notice">Notice</a>
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=task">Tasks</a>
 			<a class="item" href="delete.jsf?pid=${projectid}">Delete Project</a>
 		</div>
@@ -171,6 +171,14 @@ body{
 			<div class="noticetitle">Project Options</div>
 			<div>Options, within your reach.</div><br/>
 			
+		</c:if>
+		<c:if test="${page == 'notice'}">
+			<%-- The code here is displayed when user choose 'general' tab --%>
+			<div class="noticetitle">Edit Notice</div>
+			<div>Its easy to contact your team members.</div><br/>
+			<a href="addnotice.jsf?pid=${projectid}">Add notice</a>
+			<a href="editnotice.jsf?pid=${projectid}">Edit notice</a>
+			<a href="deletenotice.jsf?pid=${projectid}">Delete Notice</a>
 		</c:if>
 		
 	</div>
