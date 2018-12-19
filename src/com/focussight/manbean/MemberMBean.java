@@ -12,10 +12,19 @@ public class MemberMBean {
 	private int projectid;
 	private boolean userMember;
 	private boolean projectleader;
+	private List<Map<String, Object>> unconfirmeduser;
 	private List<String> memberList;
 	
 	public MemberStored mstored = new MemberStored(projectid);
 	public ProjectStored pstored = new ProjectStored(projectid);
+	
+	public List<Map<String, Object>> getUnconfirmeduser() {
+		unconfirmeduser = pstored.getUnconfirmedUser(projectid);
+		return unconfirmeduser;
+	}
+	public void setUnconfirmeduser(List<Map<String, Object>> unconfirmeduser) {
+		this.unconfirmeduser = unconfirmeduser;
+	}
 	
 	public List<String> getMemberList() {
 		memberList = mstored.getMemberList();
@@ -29,6 +38,7 @@ public class MemberMBean {
 		return userid;
 	}
 	public void setUserid(int userid) {
+		System.out.println(userid+"ewfwergwergwergergjerughreughrngnt");
 		this.userid = userid;
 	}
 	public int getProjectid() {
@@ -45,8 +55,8 @@ public class MemberMBean {
 		this.userMember = userMember;
 	}
 	public boolean isProjectleader() {
-		projectleader = pstored.isProjectOwner(userid);
-		System.out.print(projectleader);
+		projectleader = pstored.isProjectOwner(userid, projectid);
+		System.out.print("fewfwefeewfwffefewfeww"+projectleader);
 		return projectleader;
 	}
 	public void setProjectleader(boolean projectleader) {

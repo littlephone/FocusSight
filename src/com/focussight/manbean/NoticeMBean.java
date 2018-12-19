@@ -3,11 +3,10 @@ package com.focussight.manbean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.*;
-
 import java.io.IOException;
 import java.sql.*;
-
-import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.util.*;
 import com.focussight.stored.*;
 
 @ManagedBean (name="noticembean")
@@ -20,7 +19,36 @@ public class NoticeMBean {
 	private String ntitle;
 	private String ncontent;
 	private Date ndate;
+	private List<Map<String, Object>> noticemap;
+	private Map<String, Object> map;
 	
+	public Map<String, Object> getMap() {
+		NoticeStored nstored = new NoticeStored(pid, uid, nid);
+		map = nstored.getNoticeInformation();
+		pid = (int)map.get("pid");
+		nid = (int)map.get("nid");
+		ncontent = (String)map.get("ncontent");
+		ntitle = (String) map.get("ntitle");
+		return map;
+	}
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
+	}
+	public List<Map<String, Object>> getNoticemap() {
+		NoticeStored nstored = new NoticeStored(pid, uid);
+		noticemap = nstored.getAllNotice();
+		System.out.println("flag2");
+		return noticemap;
+	}
+	public void setNoticemap(List<Map<String, Object>> noticemap) {
+		this.noticemap = noticemap;
+	}
+	public Date getNdate() {
+		return ndate;
+	}
+	public void setNdate(Date ndate) {
+		this.ndate = ndate;
+	}
 	public int getUid() {
 		return uid;
 	}
@@ -59,15 +87,41 @@ public class NoticeMBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext extContext = context.getExternalContext();
 		try {
-			System.out.print("redirecting...");
 			extContext.redirect("projectsettings.jsf?pid="+pid+"&type=notice");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		return "index";
 	}
+	public List<Map<String, Object>> showNotice() {
+		NoticeStored nstored = new NoticeStored(pid, uid);
+		noticemap = nstored.getAllNotice();
+		System.out.println("flag");
+		return noticemap;
+	}
 	public String EditNotice() {
+		NoticeStored nstored = new NoticeStored(pid, uid, nid);
+		 nstored.UpdateContent(ntitle, ncontent);
+		 FacesContext context = FacesContext.getCurrentInstance();
+		 ExternalContext extContext = context.getExternalContext();
+		 try {
+			System.out.print("redirecting...edrrrrdrd");
+			extContext.redirect("projectsettings.jsf?pid="+pid+"&type=notice");
+		 }catch(IOException e) {
+				e.printStackTrace();
+		}
 		return null;
 	}
-	
+	public void deleteNotice() {
+		NoticeStored nstored = new NoticeStored(pid, uid, nid);
+		nstored.deleteNotice();
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		try {
+			System.out.print("redirecting...edrrrrdrd");
+			extContext.redirect("projectsettings.jsf?pid="+pid+"&type=notice");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

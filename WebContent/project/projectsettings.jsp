@@ -23,7 +23,7 @@
 		userid = (Integer)session.getAttribute("userid");
 	
 	ProjectStored projectdao = new ProjectStored(projectID);
-	boolean projectOwner = projectdao.isProjectOwner(userid);
+	boolean projectOwner = projectdao.isProjectOwner(userid, projectID);
 	
 	//Set pageContext
 	pageContext.setAttribute("projectOwner", projectOwner);
@@ -177,8 +177,8 @@ body{
 			<div class="noticetitle">Edit Notice</div>
 			<div>Its easy to contact your team members.</div><br/>
 			<a href="addnotice.jsf?pid=${projectid}">Add notice</a>
-			<a href="editnotice.jsf?pid=${projectid}">Edit notice</a>
-			<a href="deletenotice.jsf?pid=${projectid}">Delete Notice</a>
+			<a href="shownotice.jsf?pid=${projectid}">Edit notice</a>
+			<a href="shownotice.jsf?pid=${projectid}&mode=delete">Delete Notice</a>
 		</c:if>
 		
 	</div>

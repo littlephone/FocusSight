@@ -119,9 +119,11 @@ public class ProjectStored {
 		return 0;
 	}
 
-	public boolean isProjectOwner(int userid) {
+	public boolean isProjectOwner(int userid, int pid) {
 		//Check whether the current user is the project owner (leader)
-		int manager_id = project.getManage_id();		
+		project.setPid(pid);
+		int manager_id = project.getManage_id();
+		System.out.println("The manager_id is"+manager_id);
 		return (userid == manager_id) ? true: false;
 		
 	}
@@ -196,5 +198,33 @@ public class ProjectStored {
 			return false;
 		}
 		
+	}
+	
+	public List<Map<String, Object>> getUnconfirmedUser(int pid) {
+		List<Map<String, Object>> map = new ArrayList<Map<String, Object>>();
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL XMEMBER(?,?,?,?,?)}");
+			cstmt.setInt(1, 1);
+			cstmt.setInt(2, pid);
+			cstmt.setInt(3, 0);
+			cstmt.setInt(4, 0);
+			cstmt.registerOutParameter(5, OracleTypes.CURSOR);
+			cstmt.execute();
+			System.out.println("fewfwefewfef");
+			ResultSet rs = (ResultSet) cstmt.getObject(5);
+			while(rs.next()) {
+				Map<String, Object> maplist = new HashMap<String, Object>();
+				maplist.put("pid", rs.getInt("pid"));
+				maplist.put("mid", rs.getInt("mid"));
+				maplist.put("status", rs.getInt("status"));
+				maplist.put("username", rs.getString("username"));
+				maplist.put("profession", rs.getString("profession"));
+				maplist.put("email", rs.getString("email"));
+				map.add(maplist);
+			}			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return map;
 	}
 }

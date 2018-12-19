@@ -9,7 +9,6 @@
 
 <%
 		int projectID = Integer.parseInt(request.getParameter("pid"));
-		int nid = Integer.parseInt(request.getParameter("nid"));
 		//Set current userid and username if exists
 		Integer userid = 0;
 		String username = null;
@@ -20,30 +19,32 @@
 			curruid = userid;
 		}
 		
+		pageContext.setAttribute("mode", (String) request.getParameter("mode"));
 		pageContext.setAttribute("userid", userid);
 		pageContext.setAttribute("projectid", projectID);
-		pageContext.setAttribute("nid", nid);
+		
 %>
-<c:set target="${noticembean}"  property="pid" value="${projectid}"/>
-<c:set target="${noticembean}"  property="uid" value="${userid}"/>
-<c:set target="${noticembean}"  property="nid" value="${nid}"/>
 
-<c:set value="${noticembean.map}" var="contentmap"/>
+<c:set target="${noticembean}"  property="pid" value="${projectid}"></c:set>
+<c:set target="${noticembean}" property="uid" value="${userid}"></c:set>
+
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-
 <f:view>
+<c:set value="${noticembean.noticemap}" var="map"/>
+<c:forEach items="${map}"  var="mapline">
+	<c:if test="${mode == 'delete'}" var="isdelete">
+		<a href="deletenotice.jsf?pid=${projectid}&nid=${mapline.nid}">${mapline.ntitle}</a>
+	</c:if>
+	<c:if test="${not isdelete}">
+		<a href="editnotice.jsf?pid=${projectid}&nid=${mapline.nid}">${mapline.ntitle}</a>
+	</c:if>
+</c:forEach>
 
-<h:form>
-<h:inputText value="#{noticembean.pid}"/>
-<h:inputText value="#{noticembean.uid}"/>
-<h:inputText  value="#{noticembean.ntitle}"/><br/>
-<h:inputTextarea value="#{noticembean.ncontent}" styleClass="text-area"></h:inputTextarea><br/>
-<h:commandButton value="Edit" action="#{noticembean.EditNotice}"></h:commandButton>
-</h:form>
 </f:view>
 </body>
 </html>

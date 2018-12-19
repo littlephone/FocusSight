@@ -14,7 +14,8 @@
 	Integer userid = 0;
 	String username = null;
 	int curruid = 0;
-	if(session.getAttribute("id") != null){
+	//This part has a few bugs... Let's leave this alone
+	if(session.getAttribute("userid") != null){
 		userid = (Integer)session.getAttribute("userid");
 		username = (String)session.getAttribute("username");
 		curruid = userid;
@@ -30,20 +31,24 @@
 	List<String> project_mem_list = memberdao.getMemberList();
 	
 	//Check whether the current user is the owner (leader)
-	boolean isOwner = projectdao.isProjectOwner(curruid);
+	boolean isOwner = projectdao.isProjectOwner(curruid, projectID);
 	
 	//set PageContext
 	pageContext.setAttribute("userid", userid);
 	pageContext.setAttribute("projectid", projectID);
 	pageContext.setAttribute("username", username);
 	pageContext.setAttribute("screenshot", screenshot_path);
+	pageContext.setAttribute("isowner", isOwner);
 %>
 <c:set target="${membermbean}" property="userid" value="${userid}"></c:set>
 <c:set target="${membermbean}" property="projectid" value="${projectid}"></c:set>
 <c:set target="${projectmbean}" property="pid" value="${projectid}"></c:set>
+<c:set target="${noticembean}"    property="pid" value="${projectid}"></c:set>
+<c:set target="${noticembean}"    property="uid" value="${userid}"></c:set>
 
 <%-- Is time for us to get the project map --%> 
 <c:set value="${projectmbean.projectdetails}" var="map"/>
+<c:set value="${noticembean.noticemap}" var="noticemaplist"/>
 
 <html>
 <style>
@@ -121,6 +126,13 @@ body{
 	text-align: center;
 	font-size: 24px;
 }
+.noticewrapper{
+	display: block;
+	text-align: left;
+}
+.noticelinetitle, .noticedate, .noticecontent{
+	display:block;
+}
 </style>
 <head>
 <meta charset="UTF-8">
@@ -141,7 +153,7 @@ body{
 <c:if test="${username == null}" var="notloggedin">
 	<div class="nolog">You must <a href="../login.jsf">login</a> to participate in this project</div>
 </c:if>
-<c:if test="${(membermbean.userMember == true or membermbean.projectleader == true) and not notloggedin}">
+<c:if test="${(membermbean.userMember == true or isowner == true) and not notloggedin}">
 <div class="horizontal_wrapper"> 
 	<div class="wrapper">
 		<div class="vertical_menu">
@@ -154,7 +166,7 @@ body{
 			</c:if>
 			</div>
 			<div class="seperator"></div>
-			<c:if test="${membermbean.projectleader == true}">
+			<c:if test="${isowner == true}">
 			<a class="item" href="projectsettings.jsf?pid=${projectid}">Project Settings</a>
 			<a class="item">Manage Members</a>	
 			<a class="item" href="projectstatus.jsf?pid=${projectid}">Project Status</a>
@@ -167,6 +179,15 @@ body{
 	</div>
 	<div class="noticeboard">
 		<div class="noticetitle">Notice</div>
+		<div>
+			<c:forEach items="${noticemaplist}" var="nmap">
+				<div class="noticewrapper">
+					<div class="noticelinetitle">${nmap.ntitle}</div>
+					<div class="noticedate">${nmap.ndate }</div>
+					<div class="noticecontent">${nmap.ncontent}</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 </div>
 </c:if>
