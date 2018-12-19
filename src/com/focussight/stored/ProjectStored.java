@@ -98,25 +98,21 @@ public class ProjectStored {
 			}
 		return projects;
 	}
-	public int createProject(String pname, int manager_id, String requirements,
-			 String pintro, String psnapshot) {
+	public void createProject(String pname, int manager_id, String pintro,String requirements,
+			  String psnapshot) {
 		try {
-			CallableStatement cs = conn.prepareCall("{CALL createProject(?,?,?,?,?,?)}");
+			CallableStatement cs = conn.prepareCall("{CALL createProject(?,?,?,?,?)}");
 			cs.setString(1, pname);
 			cs.setInt(2, manager_id);
 			cs.setString(3	, requirements);
 			cs.setString(4, pintro);
 			cs.setString(5, psnapshot);
-			cs.registerOutParameter(6, OracleTypes.NUMBER);
 			cs.execute();
-			int pid = cs.getInt(6);
-			System.out.print("werwewetwefwetwe4ewtewtewt:"+ pid);
-			return pid;
+			System.out.print("i am also createproject");
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
 	}
 
 	public boolean isProjectOwner(int userid) {

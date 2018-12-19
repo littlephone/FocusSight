@@ -15,13 +15,14 @@ public class ProjectMBean {
 	private int pid;
 	private String pname;
 	private String intro;
-	private int manager_id;
+	public int manager_id;
 	private String requirements;
 	private float progress;
 	private String pintro ;
 	private String psnapshot = "haha";
 	private List<Map<String, Object>> projectmap;
 	private Map<String,Object> projectdetails;
+	private ProjectStored projectstored= new ProjectStored();
 	
 	public Map<String, Object> getProjectdetails() {
 		//Injection method to check project details, then return
@@ -95,20 +96,20 @@ public class ProjectMBean {
 	public void setPsnapshot(String psnapshot) {
 		this.psnapshot = psnapshot;
 	}
-	public String createProject() {
+	public  String createProject() {
 		FacesContext fc = FacesContext.getCurrentInstance();
-		HttpSession hs = (HttpSession)fc.getExternalContext().getSession(true);
+		HttpSession hs = (HttpSession) fc.getExternalContext().getSession(true);
 		setManager_id((int)hs.getAttribute("userid"));
-		
-		
-		int result = ps.createProject(pname, manager_id, requirements, pintro, psnapshot);
-		
-		setPid(result);
-		System.out.print("good:" + getPid());
-		String str = "viewproject.jsf?id="+ getPid();
-		System.out.println("4r2r2r23r2r23");
-		return str;
+		System.out.println("I am createProject");
+		System.out.println("pname"+pname);
+		System.out.println("mid"+manager_id);	
+		System.out.println("pintro"+pintro);
+		System.out.println("requirements"+requirements);
+		System.out.println("psnapshot"+psnapshot);				
+		projectstored.createProject(pname, manager_id, requirements, pintro, psnapshot);	
+		return "index.jsp";
 	}
+	
 	public void showProjects()  throws SQLException{
 		setProjectmap(ps.getAllProjects());
 	}

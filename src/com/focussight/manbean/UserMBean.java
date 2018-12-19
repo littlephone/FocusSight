@@ -91,7 +91,7 @@ public class UserMBean {
 		System.out.println("myid"+userid);
 		upstored.UpdateUserByuid(userid, gender, profession, age, email, phone);
 		System.out.println("UpdateUserInfoByUid");
-		return "index.jsp";
+		return "index.jsf";
 	}
 	
 	public int add()

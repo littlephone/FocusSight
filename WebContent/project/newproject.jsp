@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +18,14 @@ body{
 <title>New Project - Labstry FocusSightEE</title>
 </head>
 <body>
+<%int uid = (int)session.getAttribute("userid");
+out.print(uid);
+pageContext.setAttribute("uid", uid);
+%>
+<c:set target = "${projectmbean}" property="manager_id" value="${uid}"/>
+
 <%@include file="../header.jsp"%>
-<% if(uname != null){ %>
+
 <f:view>
 <div class="projecttitle">New Project</div>
 
@@ -33,35 +39,11 @@ body{
 	</div>
 	<div>Description or Requirements: <br/>
 	<h:inputTextarea value="#{projectmbean.requirements}"></h:inputTextarea></div>
-	<div>Project Screenshots: <!--<input type="file" name="projectScreenshot"/> ---></div>
-	
-	<h:outputLink id="submit" value="#{projectmbean.createProject}+#{projectmbean.pid}">Create</h:outputLink>
-
+	<h:commandButton id="submit" type="submit" value="Submit" action="#{projectmbean.createProject}"/>
 </h:form>
 
 </f:view>
 </body>
-<%
-}else{
-	response.sendRedirect("index.jsp");
-}
-%>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  
-<script>
-$('.projectname').on("keyup", function(e){
-	var projectname = $('.projectname').val();
-	if(projectname != ""){
-		$(document).prop('title', projectname + " - Labstry FocusSightEE");
-		$('.projecttitle').text(projectname);
-	}
-	else{
-		$(document).prop('title', "New Project - Labstry FocusSightEE");
-		$('.projecttitle').text("New Project");
-	}
-});
-</script>
+
+
 </html>
