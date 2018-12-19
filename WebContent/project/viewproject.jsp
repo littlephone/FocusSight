@@ -1,16 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
+<%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
 <%@ page import="com.focussight.stored.* , java.util.*" %>
 <!DOCTYPE html>
 <%
 	int projectID = Integer.parseInt(request.getParameter("id"));
+
+	//Set current userid and username if exists
+	Integer userid = 0;
+	String username = null;
 	int curruid = 0;
-	Integer userid;
-	
-	if((userid = (Integer)session.getAttribute("id")) != null){
+	//This part has a few bugs... Let's leave this alone
+	if(session.getAttribute("userid") != null){
+		userid = (Integer)session.getAttribute("userid");
+		username = (String)session.getAttribute("username");
 		curruid = userid;
 	}
+
 	MemberStored memberdao = new MemberStored(projectID);
 	ProjectStored projectdao = new ProjectStored(projectID);
 	
@@ -21,8 +31,25 @@
 	List<String> project_mem_list = memberdao.getMemberList();
 	
 	//Check whether the current user is the owner (leader)
-	boolean isOwner = projectdao.isProjectOwner(curruid);
+	boolean isOwner = projectdao.isProjectOwner(curruid, projectID);
+	
+	//set PageContext
+	pageContext.setAttribute("userid", userid);
+	pageContext.setAttribute("projectid", projectID);
+	pageContext.setAttribute("username", username);
+	pageContext.setAttribute("screenshot", screenshot_path);
+	pageContext.setAttribute("isowner", isOwner);
 %>
+<c:set target="${membermbean}" property="userid" value="${userid}"></c:set>
+<c:set target="${membermbean}" property="projectid" value="${projectid}"></c:set>
+<c:set target="${projectmbean}" property="pid" value="${projectid}"></c:set>
+<c:set target="${noticembean}"    property="pid" value="${projectid}"></c:set>
+<c:set target="${noticembean}"    property="uid" value="${userid}"></c:set>
+
+<%-- Is time for us to get the project map --%> 
+<c:set value="${projectmbean.projectdetails}" var="map"/>
+<c:set value="${noticembean.noticemap}" var="noticemaplist"/>
+
 <html>
 <style>
 a{
@@ -64,10 +91,13 @@ body{
 }
 .horizontal_wrapper{
 	position:relative;
-	display:inline-block;
 	width: 98%;
 	margin-top: 10px;
 	margin: 0 auto;
+}
+.horizontal_wrapper div{
+	display:inline-block;
+	vertical-align: top;
 }
 .vertical_menu{
 	display: block;
@@ -85,49 +115,81 @@ body{
 	display:block;
 	padding: 10px;
 }
+.noticeboard{
+	width: 70%;
+	min-height:400px;
+	border: 1px solid grey;
+	border-radius: 18px;
+}
+.noticetitle{
+	width:100%;
+	text-align: center;
+	font-size: 24px;
+}
+.noticewrapper{
+	display: block;
+	text-align: left;
+}
+.noticelinetitle, .noticedate, .noticecontent{
+	display:block;
+}
 </style>
 <head>
 <meta charset="UTF-8">
-<title><%=project_name %> - Labstry FocusSight EE</title>
+<title>${map.pname} - Labstry FocusSight EE</title>
 </head>
 <body>
 <%@include file="../header.jsp"%>
+
 <div class="project_details_wrapper">
 	<div class="details_inner_wrapper">
-		<div class="project_name"><%=project_name %></div>
-		<div class="leader"><%=project_leader %>(leader)</div>
-		<% for(String project_member : project_mem_list){ %>
-			<div class="member">, <%=project_member %></div>
-		<%}%>
+		<div class="project_name">${map.pname}</div>
+		<div class="leader">${projectmbean.leader}(leader)</div>
+		<c:forEach items="${membermbean.memberList}" var="member">
+			<div class="member">, ${member}</div>
+		</c:forEach>
 	</div>
 </div>
-<%
-if(uname == null){
-	out.print("<div class=\"nolog\">You must login to participate in this project</div>");
-}else{
-%>
-<div class="horizontal_wrapper">
-<div class="wrapper">
+<c:if test="${username == null}" var="notloggedin">
+	<div class="nolog">You must <a href="../login.jsf">login</a> to participate in this project</div>
+</c:if>
+<c:if test="${(membermbean.userMember == true or isowner == true) and not notloggedin}">
+<div class="horizontal_wrapper"> 
+	<div class="wrapper">
 		<div class="vertical_menu">
 			<div class="image_place">
-				<% if(screenshot_path == null) out.print("No screeshot"); %>
+			<c:if test="${screenshot == null}" var="noscreenshot">
+				No screenshot
+			</c:if>
+			<c:if test="${not noscreenshot}">
+				<img src="${map.psnapshot}" class="snapshotimage"/>
+			</c:if>
 			</div>
 			<div class="seperator"></div>
-			<%
-			if(isOwner){
-			%>
-			<a class="item" href="projectsettings.jsp?pid=<%=projectID %>">Project Settings</a>
-			<a class="item">Manage Members</a>		
-			<%	
-			}
-			%>
+			<c:if test="${isowner == true}">
+			<a class="item" href="projectsettings.jsf?pid=${projectid}">Project Settings</a>
+			<a class="item">Manage Members</a>	
+			<a class="item" href="projectstatus.jsf?pid=${projectid}">Project Status</a>
+			</c:if>
 			<a class="item">Project Requirements</a>
 			<a class="item">Meeting Room</a>
-			<a class="item">Work </a>
+			<a class="item">Upload</a>
+			<a class="item">Resource</a>
 		</div>
-	
+	</div>
+	<div class="noticeboard">
+		<div class="noticetitle">Notice</div>
+		<div>
+			<c:forEach items="${noticemaplist}" var="nmap">
+				<div class="noticewrapper">
+					<div class="noticelinetitle">${nmap.ntitle}</div>
+					<div class="noticedate">${nmap.ndate }</div>
+					<div class="noticecontent">${nmap.ncontent}</div>
+				</div>
+			</c:forEach>
+		</div>
 	</div>
 </div>
-<%}%>
+</c:if>
 </body>
 </html>

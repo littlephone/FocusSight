@@ -38,10 +38,12 @@ body{
 <head>
 <meta charset="UTF-8">
 <%
-	int userid;
-	if((userid = Integer.parseInt(request.getParameter("id")))== 0){
+	if(request.getParameter("id") == null || session.getAttribute("userid") == null){
+		HttpSession session22 = request.getSession();
+		response.sendRedirect("index.jsf");
 		return;
 	}
+	int userid = (int)session.getAttribute("userid");
 	int projectID = Integer.parseInt(request.getParameter("id"));
 	
 	pageContext.setAttribute("userid", userid);

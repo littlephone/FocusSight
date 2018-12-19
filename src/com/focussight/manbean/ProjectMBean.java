@@ -20,6 +20,17 @@ public class ProjectMBean {
 	private float progress;
 	private String pintro ;
 	private String psnapshot = "haha";
+	private String leader;
+	
+	public ProjectStored ps = new ProjectStored();
+	
+	public String getLeader() {
+		leader = ps.getManagerUsername();
+		return leader;
+	}
+	public void setLeader(String leader) {
+		this.leader = leader;
+	}
 	private List<Map<String, Object>> projectmap;
 	private Map<String,Object> projectdetails;
 	private ProjectStored projectstored= new ProjectStored();
@@ -35,7 +46,6 @@ public class ProjectMBean {
 		
 		this.projectdetails = projectdetails;
 	}
-	public ProjectStored ps = new ProjectStored();
 	
 	public List<Map<String, Object>> getProjectmap() {
 		//Injection method to check project details, then return
@@ -112,5 +122,14 @@ public class ProjectMBean {
 	
 	public void showProjects()  throws SQLException{
 		setProjectmap(ps.getAllProjects());
+	}
+	public String AlterProjectBySettings() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pid", pid);
+		map.put("pname", pname);
+		map.put("pintro", pintro);
+		return (ps.alterProjectProp(map) == true) ?
+				"projectsettings.jsf?pid=5&type=general&result=success&faces-redirect=true":
+				"projectsettings.jsf?pid=5&type=general&result=failure&faces-redirect=true";
 	}
 }
