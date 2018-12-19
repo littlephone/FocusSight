@@ -45,9 +45,8 @@ public class ProjectStored {
 	}
 	public Map<String, Object> getProjectByPid(int pid)  {
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
+		try(CallableStatement cs = conn.prepareCall("{CALL XPROJECT(?,?,?,?)}")){
 			//One time initisation when querying database
-	 		CallableStatement cs = conn.prepareCall("{CALL XPROJECT(?,?,?,?)}");
 			cs.setInt(1, 2);
 			cs.setInt(2, pid);
 			cs.setInt(3, 0);

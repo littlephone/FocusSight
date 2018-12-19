@@ -153,7 +153,7 @@ body{
 <c:if test="${username == null}" var="notloggedin">
 	<div class="nolog">You must <a href="../login.jsf">login</a> to participate in this project</div>
 </c:if>
-<c:if test="${(membermbean.userMember == true or isowner == true) and not notloggedin}">
+<c:if test="${(membermbean.userMember == true or isowner == true) and not notloggedin}" var="member">
 <div class="horizontal_wrapper"> 
 	<div class="wrapper">
 		<div class="vertical_menu">
@@ -190,6 +190,10 @@ body{
 		</div>
 	</div>
 </div>
+</c:if>
+<c:if test="${not member}">
+	<div class="nolog">You must <a href="../joinproject.jsf?id=${projectid}">join the project</a> to participate in this project</div>
+
 </c:if>
 </body>
 </html>

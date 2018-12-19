@@ -36,84 +36,7 @@
       <c:redirect url = "../index.jsf"/>
 </c:if>
 <html>
-<style>
-body{
-	margin:0;
-}
-.project_details_wrapper{
-	border-radius: 20px;
-	background-color: #00c5ff;
-	min-height: 100px; 
-	position: relative;
-}
-.details_inner_wrapper{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	padding-left: 25px;
-}
-.project_name{
-	font-size: 18px;
-}
-.horizontal_wrapper{
-	position:relative;
-	width: 98%;
-	margin-top: 10px;
-	margin: 0 auto;
-}
-.horizontal_wrapper div{
-	display:inline-block;
-	vertical-align: top;
-}
-.vertical_menu{
-	display: block;
-	border: 1px solid grey;
-	border-radius: 20px;
-	width: 300px;
-}
-.image_place{
-	width: 100%;
-	height: 150px;
-	line-height: 150px;
-	text-align: center;
-}
-.item{
-	display:block;
-	padding: 10px;
-}
-.noticeboard{
-	width: 70%;
-	min-height:400px;
-	border: 1px solid grey;
-	border-radius: 18px;
-}
-.noticetitle{
-	width:100%;
-	text-align: center;
-	font-size: 24px;
-}
-.text-input{
-	width: 500px;
-	height:40px;
-	font-size: 24px;
-	border:none;
-	padding-left: 10px;
-	/* Override border */
-	border: 2px solid #00c5ff;
-	border-radius: 24px;
-}
-.pidhidden, .text-area{
-	display:none;
-}
-.colorededit{
-	border: 1px solid orange;
-	border-radius: 18px;
-	min-height: 300px;
-	width: 98%;
-	margin: 0 auto;
-	padding: 10px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="projectsettings.css"/>
 <head>
 <meta charset="UTF-8">
 <c:set target="${projectmbean}" property="pid" value="${projectid}"/>
@@ -167,18 +90,33 @@ body{
 			</div>
 		</c:if>
 		<c:if test="${page == 'options'}">
-			<%-- The code here is displayed when user choose 'general' tab --%>
+			<%-- The code here is displayed when user choose 'options' tab --%>
 			<div class="noticetitle">Project Options</div>
 			<div>Options, within your reach.</div><br/>
 			
 		</c:if>
 		<c:if test="${page == 'notice'}">
-			<%-- The code here is displayed when user choose 'general' tab --%>
+			<%-- The code here is displayed when user choose 'notice' tab --%>
 			<div class="noticetitle">Edit Notice</div>
 			<div>Its easy to contact your team members.</div><br/>
-			<a href="addnotice.jsf?pid=${projectid}">Add notice</a>
-			<a href="shownotice.jsf?pid=${projectid}">Edit notice</a>
-			<a href="shownotice.jsf?pid=${projectid}&mode=delete">Delete Notice</a>
+			<div class="links block">
+				<a href="addnotice.jsf?pid=${projectid}">Add notice</a>
+				<a href="shownotice.jsf?pid=${projectid}&mode=delete">Delete Notice</a>
+			</div>
+			<c:set target="${noticembean}" property="pid" value="${projectid}"></c:set>
+			<c:set target="${noticembean}" property="uid" value="${userid}"></c:set>
+			<c:set value="${noticembean.noticemap}" var="map"/>
+			<div class="block">
+			<c:forEach items="${map}"  var="mapline">
+				<a class="cardasanchor" href="editnotice.jsf?pid=${projectid}&nid=${mapline.nid}">
+					<div class="cardanchorcontent">
+						${mapline.ntitle}<br/>
+						${mapline.ndate}<br/>
+						${mapline.ncontent}
+					</div>
+				</a>	
+			</c:forEach>
+			</div>
 		</c:if>
 		
 	</div>

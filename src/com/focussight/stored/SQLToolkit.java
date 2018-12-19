@@ -8,6 +8,7 @@ public class SQLToolkit{
 	public String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public String connectionstr = "jdbc:oracle:thin:@202.182.100.53:1521:XE";
 	
+	
 	public Connection Connect() {
 		try{
 			Class.forName(JDBC_DRIVER);
@@ -37,5 +38,12 @@ public class SQLToolkit{
 		return numrows;
 	}
 	
+	public void Close() {
+		try{
+			conn.close();
+		}catch(SQLException e) {
+			
+		}
+	}
 	
 }
