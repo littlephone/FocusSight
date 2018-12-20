@@ -33,7 +33,7 @@ public class MemberMBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext extContext = context.getExternalContext();
 		try {
-			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+			extContext.redirect("projectstatus.jsf?pid="+projectid+"&message=success");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +47,7 @@ public class MemberMBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext extContext = context.getExternalContext();
 		try {
-			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+			extContext.redirect("projectstatus.jsf?pid="+projectid+"&message=success");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +62,7 @@ public class MemberMBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		ExternalContext extContext = context.getExternalContext();
 		try {
-			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+			extContext.redirect("projectstatus.jsf?pid="+projectid+"&message=success");
 		}catch(IOException e) {
 			e.printStackTrace();
 		}

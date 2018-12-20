@@ -19,7 +19,7 @@ public class LoginStored {
 
 	public Users getNamePwd(String name,String pwd) throws SQLException {
 		Users lg=new Users();
-		
+		Connection conn = toolkit.Connect();
 	try {
 			String sql = "select * from users where username=? and password=?";
 			System.out.println(sql);
@@ -73,6 +73,7 @@ public class LoginStored {
 		return false;
 	} */
 	public boolean verifyUsername(String uname) {
+		Connection conn = toolkit.Connect();
 		try {
 			CallableStatement cstmt = conn.prepareCall("{CALL verifyUsername(?,?,?)}");
 			cstmt.setString(1, uname);
@@ -81,6 +82,7 @@ public class LoginStored {
 			cstmt.execute();
 			String name = cstmt.getString(2);
 			userID = cstmt.getInt(3);
+			conn.close();
 			return (name== null) ?false:true;
 			
 		}catch(Exception e){}

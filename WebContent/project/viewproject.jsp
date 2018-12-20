@@ -36,7 +36,6 @@
 	if(userid !=0) isMember = memberdao.isProjectMember(userid);
 
 	String path = (String) request.getAttribute("javax.servlet.forward.request_uri");
-	System.out.println(path);
 	
 	//set PageContext
 	pageContext.setAttribute("userid", userid);
@@ -58,89 +57,7 @@
 <c:set value="${noticembean.noticemap}" var="noticemaplist"/>
 
 <html>
-<style>
-a{
-	text-decoration: none;
-}
-
-body{
-	margin: 0;
-}
-.project_details_wrapper{
-	border-radius: 20px;
-	background-color: #00c5ff;
-	min-height: 100px; 
-	position: relative;
-}
-.project_name{
-	font-size: 18px;
-}
-.details_inner_wrapper{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	padding-left: 25px;
-}
-.leader, .member{
-	display: inline-block;
-}
-.leader{
-	font-weight: bold;
-}
-.nolog{
-	width:100%;
-	text-align:center;
-	height: 500px;
-	margin-top: 10px;
-	line-height: 500px;
-	border: 1px solid grey;
-	border-radius: 20px;
-}
-.horizontal_wrapper{
-	position:relative;
-	width: 98%;
-	margin-top: 10px;
-	margin: 0 auto;
-}
-.horizontal_wrapper div{
-	display:inline-block;
-	vertical-align: top;
-}
-.vertical_menu{
-	display: block;
-	border: 1px solid grey;
-	border-radius: 20px;
-	width: 300px;
-}
-.image_place{
-	width: 100%;
-	height: 150px;
-	line-height: 150px;
-	text-align: center;
-}
-.item{
-	display:block;
-	padding: 10px;
-}
-.noticeboard{
-	width: 70%;
-	min-height:400px;
-	border: 1px solid grey;
-	border-radius: 18px;
-}
-.noticetitle{
-	width:100%;
-	text-align: center;
-	font-size: 24px;
-}
-.noticewrapper{
-	display: block;
-	text-align: left;
-}
-.noticelinetitle, .noticedate, .noticecontent{
-	display:block;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="viewproject.css"/>
 <head>
 <meta charset="UTF-8">
 <title>${map.pname} - Labstry FocusSight EE</title>
@@ -188,11 +105,13 @@ body{
 		<div class="noticetitle">Notice</div>
 		<div>
 			<c:forEach items="${noticemaplist}" var="nmap">
-				<div class="noticewrapper">
-					<div class="noticelinetitle">${nmap.ntitle}</div>
-					<div class="noticedate">${nmap.ndate }</div>
-					<div class="noticecontent">${nmap.ncontent}</div>
-				</div>
+				<div class="cardasanchor">
+					<div class="cardanchorcontent">
+						<div class="noticelinetitle">${nmap.ntitle}</div>
+						<div class="noticelinetitle">${nmap.ndate}</div>
+						<div class="noticelinetitle">${nmap.ncontent}</div>
+					</div>
+				</div>	
 			</c:forEach>
 		</div>
 	</div>

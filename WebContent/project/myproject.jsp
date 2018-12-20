@@ -14,19 +14,30 @@
 
 <%
 	//Before we start, we need to get the current session
-	MyProjectMBean pb = new MyProjectMBean();
+	//MyProjectMBean pb = new MyProjectMBean();
+	String path = (String) request.getAttribute("javax.servlet.forward.request_uri");
 	if(session.getAttribute("username") == null){
 		System.out.println("HERE");
-		response.sendRedirect("../login.jsf?getBackTo=myproject.jsf");
+		response.sendRedirect("../login.jsf?from="+path);
 		return;
 	}
+	
+	
+	
+	
+	
 	String username = (String)session.getAttribute("username");
 	int userid = (Integer)session.getAttribute("userid");
 	ProjectStored ps = new ProjectStored();
 	List<Map<String, Object>> maplist = ps.getProjectProp(userid);
+	
+	//Set page context
 	pageContext.setAttribute("maplist", maplist);
 	pageContext.setAttribute("userid", userid);
+	
 %>
+<c:set target="${usermbean}" property="userid" value="${userid}"/>
+<c:set value="${usermbean.joinedproject}" var="joinedprojectlist"/>
 
 <!DOCTYPE html>
 <html>
@@ -62,6 +73,9 @@ a{
 .contentswrapper{
 	padding: 10px;
 }
+.seperator{
+	height: 20px;
+}
 </style>
 <meta charset="UTF-8">
 <title>My project - Labstry FocusSight</title>
@@ -72,7 +86,7 @@ a{
 <div class="title">My FocusSight Projects</div>
 <a href="newproject.jsf" class="add">Create a new project</a>
 <div class="card">
-<div>Leading Projects...</div>
+<div class="title">Leading Projects...</div>
 <c:forEach items="${maplist}" var="mapitem">
 	<a class="item" href="viewproject.jsf?id=${mapitem.pid}">
 		<div class="contentswrapper">
@@ -80,10 +94,31 @@ a{
 			<div>${mapitem.pintro}</div>
 		</div>
 	</a>
+	<div class="seperator"></div>
 </c:forEach>
 </div>
 <div class="card">
-<div>Joined Projects..</div>
+<div class="title">Joined Projects..</div>
+<c:forEach items="${joinedprojectlist}" var="joinedlist">
+	<c:if test="${joinedlist.pid == 0}" var="notfound">
+		<a class="item" href="viewprojectbycata.jsf">
+			<div class="contentswrapper">
+				<div>${joinedlist.pname}</div>
+				<div>We need your contribution. ${joinedlist.pintro}</div>
+			</div>
+		</a>
+		<div class="seperator"></div>
+	</c:if>
+	<c:if test="${not notfound}">
+		<a class="item" href="viewproject.jsf?id=${joinedlist.pid}">
+			<div class="contentswrapper">
+				<div>${joinedlist.pname}</div>
+				<div>${joinedlist.pintro}</div>
+			</div>
+		</a>
+		<div class="seperator"></div>
+	</c:if>
+</c:forEach>
 </div>
 <!--
 %

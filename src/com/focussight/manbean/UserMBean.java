@@ -1,13 +1,10 @@
 package com.focussight.manbean;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
-import com.focussight.stored.ProjectStored;
-import com.focussight.stored.UpdateStored;
+import com.focussight.stored.*;
 
 @ManagedBean (name="usermbean")
 @RequestScoped
@@ -98,6 +95,8 @@ public class UserMBean {
 		return "index.jsf";
 	}
 	public List<Map<String, Object>> getJoinedproject() {
+		UserStored ustored = new UserStored(userid);
+		joinedproject = ustored.getUserJoinedProject(ustored.user.getUid());		
 		return joinedproject;
 	}
 	public void setJoinedproject(List<Map<String, Object>> joinedproject) {
