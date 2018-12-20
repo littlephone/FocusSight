@@ -22,7 +22,11 @@ public class UserMBean {
 	private int age;
 	private String profession;
 	private Map<String, Object> usermap;
+	private List<Map<String, Object>> joinedproject;
+	
 	public UpdateStored upstored= new UpdateStored();
+	public ProjectStored pstored = new ProjectStored();
+
 	
 	public Map<String, Object> getUsermap() {
 		return usermap;
@@ -93,11 +97,11 @@ public class UserMBean {
 		System.out.println("UpdateUserInfoByUid");
 		return "index.jsf";
 	}
-	
-	public int add()
-	{
-		userid=userid+10;
-		return userid;
+	public List<Map<String, Object>> getJoinedproject() {
+		return joinedproject;
+	}
+	public void setJoinedproject(List<Map<String, Object>> joinedproject) {
+		this.joinedproject = joinedproject;
 	}
 	
 }

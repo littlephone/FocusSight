@@ -62,6 +62,7 @@
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=options">Project Options</a>	
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=notice">Notice</a>
 			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=task">Tasks</a>
+			<a class="item" href="projectsettings.jsf?pid=${projectid}&type=status">Project Status</a>
 			<a class="item" href="delete.jsf?pid=${projectid}">Delete Project</a>
 		</div>
 	</div>
@@ -95,6 +96,8 @@
 			<div>Options, within your reach.</div><br/>
 			
 		</c:if>
+		
+		
 		<c:if test="${page == 'notice'}">
 			<%-- The code here is displayed when user choose 'notice' tab --%>
 			<div class="noticetitle">Edit Notice</div>
@@ -110,15 +113,14 @@
 			<c:forEach items="${map}"  var="mapline">
 				<a class="cardasanchor" href="editnotice.jsf?pid=${projectid}&nid=${mapline.nid}">
 					<div class="cardanchorcontent">
-						${mapline.ntitle}<br/>
-						${mapline.ndate}<br/>
-						${mapline.ncontent}
+						<div class="noticentry">${mapline.ntitle}</div>
+						<div class="noticentry">${mapline.ndate}</div>
+						<div class="noticentry">${mapline.ncontent}</div>
 					</div>
 				</a>	
 			</c:forEach>
 			</div>
 		</c:if>
-		
 	</div>
 </div>
 </f:view>

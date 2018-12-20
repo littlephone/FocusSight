@@ -1,8 +1,11 @@
 package com.focussight.stored;
 
 import com.focussight.bean.*;
+
+import oracle.jdbc.OracleTypes;
+
 import java.sql.*;
-import java.util.Objects;
+import java.util.*;
 
 
 public class UserStored {
@@ -95,4 +98,43 @@ public class UserStored {
 		return (Objects.equals(user.getPassword(), entrypassword))? true : false;
 	}
 	
+	public List<Map<String, Object>> getUserJoinedProject(int uid){
+		List<Map<String, Object>> userjoinedlist = new ArrayList<Map<String, Object>>();
+		try{
+			CallableStatement cstmt = conn.prepareCall("{CALL XMEMBER(?,?,?,?,?)}");
+			cstmt.setInt(1, 5);
+			cstmt.setInt(2, 0);
+			cstmt.setInt(3, uid);
+			cstmt.setInt(4, 0);
+			cstmt.registerOutParameter(5, OracleTypes.CURSOR);
+			cstmt.execute();
+			ResultSet rs = (ResultSet)cstmt.getObject(5);
+			if(!rs.next()) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("pid", 0);
+				map.put("pname", "No projects found.");
+				map.put("pintro", "Please join a project");
+				userjoinedlist.add(map);
+			}else {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("pid", rs.getInt("pid"));
+				map.put("pname", rs.getString("pname"));
+				map.put("pintro", rs.getString("pintro"));
+				
+				userjoinedlist.add(map);
+			}
+			while(rs.next()) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("pid", rs.getInt("pid"));
+				map.put("pname", rs.getString("pname"));
+				map.put("pintro", rs.getString("pintro"));
+				
+				userjoinedlist.add(map);
+			}
+		}
+		catch(SQLException sqle) {
+			sqle.printStackTrace();
+		}
+		return userjoinedlist; 
+	}
 }

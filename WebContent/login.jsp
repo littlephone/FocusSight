@@ -2,11 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+
 <%@page import="java.util.*" %>
 <%@page import="com.focussight.stored.*" %>
 <%@page import="java.sql.*" %>
 
 <!DOCTYPE html>
+<%
+	String from = null;
+	if(request.getParameter("from") != null){
+		from = (String)request.getParameter("from");
+	}
+	pageContext.setAttribute("fromsite", from);
+%>
+<c:set target="${loginmbean}" property="fromsite" value="${fromsite}"></c:set>
 <html>
 <head>
 <style>
@@ -25,6 +35,9 @@
 	background-color: orange;
 	padding-left: 10px;
 }
+.hidden{
+	display:none;
+}
 </style>
 
 <meta charset="UTF-8">
@@ -38,6 +51,7 @@
 <div class="cardtitle">Login to FocusSight EE</div>
 
 <h:form>
+<div class="formrow hidden"><h:inputText id="from" value="#{loginmbean.fromsite}"></h:inputText></div>
 <div class="formrow"> Username: <h:inputText id="username" value="#{loginmbean.username}"></h:inputText></div>
 <div class="formrow"> Password: <h:inputSecret id="password" value="#{loginmbean.password}"></h:inputSecret></div>
 <!--<div class="formrow"> Username: <input type="text" name="username"/></div>

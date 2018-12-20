@@ -64,13 +64,15 @@ a{
 }
 </style>
 <meta charset="UTF-8">
-<title>My project</title>
+<title>My project - Labstry FocusSight</title>
 </head>
 <body>
 <%@include file="header.jsp"%>
 <f:view>
 <div class="title">My FocusSight Projects</div>
 <a href="newproject.jsf" class="add">Create a new project</a>
+<div class="card">
+<div>Leading Projects...</div>
 <c:forEach items="${maplist}" var="mapitem">
 	<a class="item" href="viewproject.jsf?id=${mapitem.pid}">
 		<div class="contentswrapper">
@@ -79,6 +81,10 @@ a{
 		</div>
 	</a>
 </c:forEach>
+</div>
+<div class="card">
+<div>Joined Projects..</div>
+</div>
 <!--
 %
 	

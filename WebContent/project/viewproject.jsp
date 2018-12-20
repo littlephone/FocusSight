@@ -5,7 +5,7 @@
 <%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
-<%@ page import="com.focussight.stored.* , java.util.*" %>
+<%@ page import="com.focussight.stored.* , java.util.*, java.net.*" %>
 <!DOCTYPE html>
 <%
 	int projectID = Integer.parseInt(request.getParameter("id"));
@@ -28,10 +28,15 @@
 	String project_leader = projectdao.getManagerUsername();
 	String screenshot_path = projectdao.project.getPsnapshot();
 	
-	List<String> project_mem_list = memberdao.getMemberList();
+	List<String> project_mem_list = memberdao.getMemberList(projectID);
 	
-	//Check whether the current user is the owner (leader)
+	//Check whether the current user is the owner (leader) or team member
 	boolean isOwner = projectdao.isProjectOwner(curruid, projectID);
+	boolean isMember = false;
+	if(userid !=0) isMember = memberdao.isProjectMember(userid);
+
+	String path = (String) request.getAttribute("javax.servlet.forward.request_uri");
+	System.out.println(path);
 	
 	//set PageContext
 	pageContext.setAttribute("userid", userid);
@@ -39,6 +44,8 @@
 	pageContext.setAttribute("username", username);
 	pageContext.setAttribute("screenshot", screenshot_path);
 	pageContext.setAttribute("isowner", isOwner);
+	pageContext.setAttribute("ismember", isMember);
+	pageContext.setAttribute("path", path);
 %>
 <c:set target="${membermbean}" property="userid" value="${userid}"></c:set>
 <c:set target="${membermbean}" property="projectid" value="${projectid}"></c:set>
@@ -151,9 +158,9 @@ body{
 	</div>
 </div>
 <c:if test="${username == null}" var="notloggedin">
-	<div class="nolog">You must <a href="../login.jsf">login</a> to participate in this project</div>
+	<div class="nolog">You must <a href="../login.jsf?from=${path}?id=${projectid}">login</a> to participate in this project</div>
 </c:if>
-<c:if test="${(membermbean.userMember == true or isowner == true) and not notloggedin}" var="member">
+<c:if test="${(ismember == true or isowner == true) and not notloggedin}" var="member">
 <div class="horizontal_wrapper"> 
 	<div class="wrapper">
 		<div class="vertical_menu">

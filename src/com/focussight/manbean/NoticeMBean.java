@@ -14,7 +14,6 @@ import com.focussight.stored.*;
 public class NoticeMBean {
 	private int pid;
 	private int uid;
-
 	private int nid;
 	private String ntitle;
 	private String ncontent;
@@ -35,6 +34,7 @@ public class NoticeMBean {
 		this.map = map;
 	}
 	public List<Map<String, Object>> getNoticemap() {
+		System.out.print("vrgregergergregergergerger:"+uid);
 		NoticeStored nstored = new NoticeStored(pid, uid);
 		noticemap = nstored.getAllNotice();
 		System.out.println("flag2");

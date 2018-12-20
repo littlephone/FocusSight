@@ -98,3 +98,8 @@ body{
 .cardanchorcontent{
 	padding:10px;
 }
+.noticentry{
+	clear:both;
+	display:block;
+	padding:10px;
+}

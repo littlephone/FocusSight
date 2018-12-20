@@ -12,6 +12,7 @@ import oracle.jdbc.internal.OracleTypes;
 
 public class ProjectStored {
 	//Create a java bean
+	public int pid = 0;
 	public Project project = new Project();
 	public SQLToolkit toolkit = new SQLToolkit();
 	public Users user = new Users();
@@ -19,6 +20,7 @@ public class ProjectStored {
 	ResultSet rs = null;
 	
 	public ProjectStored(int pid) {
+		this.pid = pid;
 		getProjectByPid(pid);	
 	}
 	public ProjectStored() {
@@ -194,7 +196,7 @@ public class ProjectStored {
 		}
 		
 	}
-	
+	//For users confirming
 	public List<Map<String, Object>> getUnconfirmedUser(int pid) {
 		List<Map<String, Object>> map = new ArrayList<Map<String, Object>>();
 		try {
@@ -221,5 +223,35 @@ public class ProjectStored {
 			e.printStackTrace();
 		}
 		return map;
+	}
+	
+	public void acceptUser(int uid, int pid) {
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL XMEMBER(?,?,?,?,?)}");
+			cstmt.setInt(1, 2);
+			cstmt.setInt(2, pid);
+			cstmt.setInt(3, uid);
+			cstmt.setInt(4, 0);
+			cstmt.registerOutParameter(5, OracleTypes.CURSOR);
+			cstmt.execute();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+	}
+	public void ApplicationTreatment(int number, int uid, int pid) {
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL XMEMBER(?,?,?,?,?)}");
+			cstmt.setInt(1, number);
+			cstmt.setInt(2, pid);
+			cstmt.setInt(3, uid);
+			cstmt.setInt(4, 0);
+			cstmt.registerOutParameter(5, OracleTypes.CURSOR);
+			cstmt.execute();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return;
+		}
 	}
 }

@@ -1,6 +1,9 @@
 package com.focussight.manbean;
 
+import java.io.IOException;
+
 import javax.faces.bean.*;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.*;
 import javax.swing.JOptionPane;
@@ -16,7 +19,16 @@ public class LoginMBean {
 	private String password;
 	private String hello="hello1";
 	private String message;
+	private String fromsite = null;
 	
+	public String getFromsite() {
+		return fromsite;
+	}
+
+	public void setFromsite(String fromsite) {
+		this.fromsite = fromsite;
+	}
+
 	public LoginMBean() {
 		//Do nothing
 	}
@@ -64,6 +76,16 @@ public class LoginMBean {
 			
 			session.setAttribute("userid", loginstored.userID);
 			session.setAttribute("username", username);
+			if(fromsite != null && !fromsite.equals("")) {
+				System.out.print("NOT EQUAL");
+				FacesContext context = FacesContext.getCurrentInstance();
+				ExternalContext extContext = context.getExternalContext();
+				try {
+					extContext.redirect(fromsite);
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
 			return "index.jsp";
 		}
 		else if(!userverify) {

@@ -2,7 +2,12 @@ package com.focussight.manbean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 import com.focussight.stored.*;
+
+import java.io.IOException;
 import java.util.*;
 
 @ManagedBean (name="membermbean")
@@ -15,8 +20,57 @@ public class MemberMBean {
 	private List<Map<String, Object>> unconfirmeduser;
 	private List<String> memberList;
 	
+	//For calling back when approving/rejecting/blocking
+	private String confirmUser;
+	private String rejectUser;
+	private String blockUser;
+
 	public MemberStored mstored = new MemberStored(projectid);
 	public ProjectStored pstored = new ProjectStored(projectid);
+	
+	public String getRejectUser() {
+		pstored.ApplicationTreatment(4, userid, projectid);
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		try {
+			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return rejectUser;
+	}
+	public void setRejectUser(String rejectUser) {
+		this.rejectUser = rejectUser;
+	}
+	public String getBlockUser() {
+		pstored.ApplicationTreatment(3, userid, projectid);
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		try {
+			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return blockUser;
+	}
+	public void setBlockUser(String blockUser) {
+		this.blockUser = blockUser;
+	}
+	public String getConfirmUser() {
+		pstored.ApplicationTreatment(2, userid, projectid);
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		try {
+			extContext.redirect("managemember.jsf?pid="+projectid+"&message=success");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return confirmUser;
+	}
+	public void setConfirmUser(String confirmUser) {
+		this.confirmUser = confirmUser;
+	}
 	
 	public List<Map<String, Object>> getUnconfirmeduser() {
 		unconfirmeduser = pstored.getUnconfirmedUser(projectid);
@@ -26,8 +80,9 @@ public class MemberMBean {
 		this.unconfirmeduser = unconfirmeduser;
 	}
 	
+	
 	public List<String> getMemberList() {
-		memberList = mstored.getMemberList();
+		memberList = mstored.getMemberList(projectid);
 		return memberList;
 	}
 	public void setMemberList(List<String> memberList) {

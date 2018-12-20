@@ -54,7 +54,7 @@ public class MemberStored {
 		}
 		return false;
 	}	
-	public List<String> getMemberList() {
+	public List<String> getMemberList(int pid) {
 		String stmt = "SELECT u.username AS username FROM member m, users u WHERE pid = ? AND m.mid = u.userid AND status = 1";
 		List<String> mem_list = new ArrayList<String>();
 		try {
