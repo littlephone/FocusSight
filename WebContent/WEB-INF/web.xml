@@ -7,37 +7,6 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   
-  <servlet>
-    <servlet-name>UploadHandleServlet</servlet-name>
-    <servlet-class>com.focussight.bean.UploadHandleServlet</servlet-class>
-</servlet>
-
-<servlet>
-     <servlet-name>ListFileServlet</servlet-name>
-     <servlet-class>me.gacl.web.controller.ListFileServlet</servlet-class>
-</servlet>
-
-<servlet>
-      <servlet-name>DownLoadServlet</servlet-name>
-      <servlet-class>me.gacl.web.controller.DownLoadServlet</servlet-class>
-</servlet>
- 
- 
-  <servlet-mapping>
-    <servlet-name>UploadHandleServlet</servlet-name>
-    <url-pattern>/UploadHandleServlet</url-pattern>
-</servlet-mapping>
-  
-  <servlet-mapping>
-     <servlet-name>ListFileServlet</servlet-name>
-    <url-pattern>/ListFileServlet</url-pattern>
-</servlet-mapping>
-  
-  <servlet-mapping>
-      <servlet-name>DownLoadServlet</servlet-name>
-      <url-pattern>/DownLoadServlet</url-pattern>
-</servlet-mapping>
-  
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.faces</url-pattern>
