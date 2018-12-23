@@ -65,7 +65,7 @@ public class TaskStored {
 			Connection conn = toolkit.Connect();
 			CallableStatement cstmt = conn.prepareCall("{CALL XTASK(?,?,?,?,?,?,?,?)}");
 			cstmt.setInt(1, 1);
-			cstmt.setInt(2, tid);
+			cstmt.setInt(2, 0);
 			cstmt.setInt(3, pid);
 			cstmt.setInt(4, 0);
 			cstmt.registerOutParameter(5, OracleTypes.TIMESTAMP);
@@ -73,12 +73,14 @@ public class TaskStored {
 			cstmt.setString(7, null);
 			cstmt.registerOutParameter(8, OracleTypes.CURSOR);
 			cstmt.execute();
-			ResultSet rs = (ResultSet) cstmt.getObject(5);
+			ResultSet rs = (ResultSet) cstmt.getObject(8);
+			System.out.println("I am 1-2"+ pid);
 			while(rs.next()) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("tid", rs.getInt("tid"));
 				map.put("tname", rs.getString("ttitle"));
 				map.put("tcontent", rs.getString("tcontent"));
+				System.out.println("i am content:"+tcontent);
 				map.put("create_date", rs.getTimestamp("CREATE_DATE"));
 				map.put("end_date", rs.getTimestamp("END_DATE"));
 				map.put("status", rs.getInt("STATUS"));

@@ -15,10 +15,21 @@ public class TaskMBean {
 	private java.util.Date create_date;
 	private java.util.Date end_date;
 	
-	private List<Map<String, Object>> tasklist;
+	private List<Map<String, Object>> taskmap;
+	private List<Map<String, Object>> tasklist ;
 	
+	public List<Map<String, Object>> getTaskmap() {
+		return taskmap;
+	}
+	public void setTaskmap(List<Map<String, Object>> taskmap) {
+		this.taskmap = taskmap;
+	}
+
 	public List<Map<String, Object>> getTasklist() {
-		TaskStored tstored = new TaskStored(tid, pid);
+		System.out.println("I am 1");
+		TaskStored tstored = new TaskStored();
+		tstored.pid=pid;
+		System.out.println("I am 2"+pid);
 		tasklist = tstored.getTaskList();
 		return tasklist;
 	}
@@ -71,5 +82,14 @@ public class TaskMBean {
 		tstored.end_date = end_date;
 		tstored.addTask();
 		return "projectsettings.jsf";
+	}
+	
+	public List<Map<String, Object>> showTask() {
+		TaskStored tstored = new TaskStored();
+		System.out.println("i am pid "+ pid);
+		tstored.pid = pid;
+		taskmap = tstored.getTaskList();
+		System.out.println("flag");
+		return taskmap;
 	}
 }

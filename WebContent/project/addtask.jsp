@@ -41,6 +41,7 @@
 	pageContext.setAttribute("minute", minutes);
 	
 %>
+
 <c:set target="${projectmbean}" property="pid" value="${pid}"/>
 <c:set value="${projectmbean.projectdetails}" var="projectmap"/>
 <c:set target="${taskmbean}" property="pid" value="${projectmap.pid}"/>
