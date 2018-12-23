@@ -97,7 +97,7 @@
 			</c:if>
 			<a class="item">Project Requirements</a>
 			<a class="item">Meeting Room</a>
-			<a class="item">Upload</a>
+			<a class="item" href="showtask.jsf?pid=${projectid}">Task</a>
 			<a class="item">Resource</a>
 		</div>
 	</div>

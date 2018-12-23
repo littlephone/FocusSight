@@ -23,9 +23,7 @@
 	pageContext.setAttribute("year", availyears);
 	
 %>
-<c:set target="${projectmbean}" property="pid" value="${projectid}"/>
-<c:set value="${projectmbean.projectdetails}" var="projectmap"/>
-
+<c:set target="${taskmbean}" property="pid" value="${pid}"/>
 
 <html>
 <link rel="stylesheet" type="text/css" href="projectsettings.css"/>
