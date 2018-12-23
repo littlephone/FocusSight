@@ -1,8 +1,13 @@
 package com.focussight.stored;
 
+import java.io.IOException;
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 import oracle.jdbc.*;
 
 public class TaskStored {
@@ -11,7 +16,8 @@ public class TaskStored {
 	public int pid;
 	public String ttitle;
 	public String tcontent;
-	public Date end_date;
+	public java.util.Date end_date;
+	public Calendar cal = Calendar.getInstance();
 	
 	public TaskStored() {
 		//Do Nothing
@@ -20,7 +26,12 @@ public class TaskStored {
 		this.tid = tid;
 		this.pid = pid;
 	}
+	public void setCalendarByDateTime() {
+		cal.setTime(end_date);
+	}
 	public void addTask() {
+		setCalendarByDateTime();
+		java.sql.Timestamp tstamp = new java.sql.Timestamp(cal.getTimeInMillis());
 		try {
 			SQLToolkit toolkit = new SQLToolkit();
 			Connection conn = toolkit.Connect();
@@ -29,16 +40,23 @@ public class TaskStored {
 			cstmt.setInt(2, 0);
 			cstmt.setInt(3, pid);
 			cstmt.setInt(4, 0);
-			cstmt.setDate(5, end_date);
+			cstmt.setTimestamp(5, tstamp);
 			cstmt.setString(6, ttitle);
 			cstmt.setString(7, tcontent);
 			cstmt.registerOutParameter(8, OracleTypes.CURSOR);
 			cstmt.execute();
-			
 			conn.close();
 		}catch(SQLException sqle) {
 			sqle.printStackTrace();
 		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext extContext = context.getExternalContext();
+		try {
+			extContext.redirect("projectsettings.jsf?pid="+pid+"&type=task");
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	public List<Map<String, Object>> getTaskList() {
 		List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
