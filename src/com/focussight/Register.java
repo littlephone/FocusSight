@@ -47,7 +47,7 @@ public class Register extends HttpServlet {
 		Users user = new Users();
 		user.createUser(username, password, gender, profession, age, email, phone);
 		
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("login.jsf");
 	}
 
 }

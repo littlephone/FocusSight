@@ -1,10 +1,14 @@
 package com.focussight.stored;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import com.focussight.bean.*;
 
@@ -13,6 +17,13 @@ import oracle.jdbc.internal.OracleTypes;
 public class ProjectStored {
 	//Create a java bean
 	public int pid = 0;
+	public String pname=null;
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
 	public Project project = new Project();
 	public SQLToolkit toolkit = new SQLToolkit();
 	public Users user = new Users();
@@ -72,6 +83,28 @@ public class ProjectStored {
 				
 		}catch(Exception e) {}
 		return map;
+	}
+	
+	public List<Map<String, Object>> selectProjectbyName(String pname) throws SQLException{
+		List<Map<String, Object>> projects = new ArrayList<Map<String, Object>>();
+		CallableStatement css = conn.prepareCall("{CALL selectProjectbyName(?,?)}");
+		css.setString(1,pname);
+		css.registerOutParameter(2, OracleTypes.CURSOR);
+		css.execute();
+		rs = (ResultSet) css.getObject(2);
+		int i=0;
+		while(rs.next()) {
+			i++;
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("pid", rs.getInt("pid"));
+			map.put("pname", rs.getString("pname"));
+			map.put("manager_id", rs.getString("manager_id"));
+			map.put("requirements", rs.getString("requirements"));
+			map.put("pintro", rs.getString("pintro"));
+			projects.add(map);
+			}
+		System.out.println("count:"+i);
+		return projects;
 	}
 	
 	public String getManagerUsername() {
@@ -190,6 +223,14 @@ public class ProjectStored {
 			cstmt.setInt(1, pid);
 			cstmt.setInt(2, userid);
 			cstmt.execute();
+			FacesContext context = FacesContext.getCurrentInstance();
+			 ExternalContext extContext = context.getExternalContext();
+			 try {
+				System.out.print("redirecting...edrrrrdrd");
+				extContext.redirect("index.jsf");
+			 }catch(IOException e) {
+					e.printStackTrace();
+			}
 			return true;
 		}catch(SQLException sqle) {
 			return false;

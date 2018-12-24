@@ -21,9 +21,12 @@
 	//Now we got userid and requested project ID, let's call join project
 	ProjectStored stored = new ProjectStored();
 	boolean isProjectJoinRequested = stored.joinProject(projectid, userid);
-	
+
 %>
 
 <body>
+Successful application!
+<br/>  
+<a href="index.jsf">Index</a>
 </body>
 </html>

@@ -5,6 +5,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
  <%@page import="java.util.*, 
  								com.focussight.manbean.*" %>
+ 								
+ 			
 <%
 
 //Check if the session is exists
@@ -15,9 +17,11 @@ if(!session.isNew()){
 	String username = null;
 	int id = 0;
 }
+String searchname=request.getParameter("searchname");
+pageContext.setAttribute("searchname", searchname);
 
 	ProjectMBean mbean = new ProjectMBean();
-	 mbean.showProjects();
+	 mbean.selectProjectbyName(searchname);
 	 List<Map<String, Object>> list = mbean.getProjectmap();
 	 pageContext.setAttribute("list", list);
 %>
@@ -25,6 +29,9 @@ if(!session.isNew()){
 <html>
 <head>
 
+<%
+
+%>
 
 <style>
 body{
@@ -45,10 +52,7 @@ if(uname != null){
 <a href="project/myproject.jsf"> 我的项目 My project </a>
 <a href="manage.jsf">My information</a>
 <%} %>
-<form action="search.jsf" method="post">
-Search: <input  type="text" name="searchname" value=""/>
-<input type="submit" />
-</form>
+
 <div>
 Projects:
 <c:forEach items="${list}" var="map">
@@ -57,6 +61,7 @@ Projects:
 	</a>
 </c:forEach>
 </div>
+
 </f:view>
 </body>
 </html>

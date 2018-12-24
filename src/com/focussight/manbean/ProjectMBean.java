@@ -42,6 +42,15 @@ public class ProjectMBean {
 		}catch(Exception e) {}
 		return projectdetails;
 	}
+	
+	
+	
+	public void selectProjectbyName(String pname)  throws SQLException{
+		System.out.println("my name is:"+pname);
+		setProjectmap(ps.selectProjectbyName(pname));
+	}
+	
+	
 	public void setProjectdetails(Map<String, Object> projectdetails) {
 		
 		this.projectdetails = projectdetails;
