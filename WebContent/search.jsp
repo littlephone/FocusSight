@@ -42,25 +42,12 @@ body{
 <title>FocusSight EE - Labstry</title>
 </head>
 <body>
-<%@include file="header.jsp"%>
 <f:view>
-<h1>Your project, your team, starts here...</h1>
-
-<%
-if(uname != null){
-%>
-<a href="project/myproject.jsf"> 我的项目 My project </a>
-<a href="manage.jsf">My information</a>
-<%} %>
-
-<div>
-Projects:
 <c:forEach items="${list}" var="map">
 	<a href="projectdetails.jsf?id=${map.pid}">${map.pname} <br/>
 		
 	</a>
 </c:forEach>
-</div>
 
 </f:view>
 </body>

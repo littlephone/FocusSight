@@ -30,6 +30,95 @@ if(!session.isNew()){
 body{
 	margin: 0;
 }
+.fakesubheader{
+    display:none;
+    min-height:100px;
+    line-height: 100px;
+    border-radius: 18px;
+}
+  .searchbarwrapper{
+    width:500px;
+    margin: 0 auto;
+    white-space:nowrap;
+  }
+  #close{
+    display: inline-block;
+  }
+  .searchbox{
+	display:inline-block;
+	width:350px;
+  }
+  
+@keyframes dropsubmenu{
+	0%{top: -5000px; opacity: 0}
+	90%{top:-4px; opacity: 0.3}
+	100%{top:0px; opacity: 1}
+}
+#searchkey{
+	border:none;
+	/*Override the border */
+	border-bottom: 2px solid white;
+	font-size:18px;
+}
+.searchbox, #close{
+	vertical-align: middle;
+	position:relative;
+	animation: dropsubmenu 1s ease;
+}
+.topmenu{
+	width: 100%;
+	height: 100px;
+	background-color: #00c5ff;
+	border-radius: 18px;
+}
+@keyframes dropdownsearchmenu{
+	0%{height: 0px;}
+	90%{height: 395px};
+	100%{height: 400px}
+}
+.searchresultprovider{
+	width:100%;
+	position:absolute;
+	top:150px;
+	height:400px;
+	display: none; 
+	animation: : dropdownsearchmenu 1s ease;
+	padding-left: 50px;
+	
+}
+.topmenu a{
+	text-decoration:none;
+	color:white;
+	width: 200px;
+	margin-left: 100px;
+	margin-right: 100px;
+	margin-bottom:10px;
+}
+.icon{
+	width: 70px;
+	height:70px;
+}
+.littleicon{
+	width: 40px;
+	height: 40px;
+}
+.link{
+	display:inline-block;
+}
+ /* Modulise Search Bar Style */
+ .searchbarwrapper{
+    width:500px;
+    margin: 0 auto;
+    white-space:nowrap;
+  }
+  #close{
+    display: inline-block;
+  }
+  .searchbox{
+	display:inline-block;
+	width:350px;
+  }
+
 </style>
 <meta charset="UTF-8">
 <title>FocusSight EE - Labstry</title>
@@ -37,18 +126,42 @@ body{
 <body>
 <%@include file="header.jsp"%>
 <f:view>
-<h1>Your project, your team, starts here...</h1>
+
 
 <%
 if(uname != null){
 %>
-<a href="project/myproject.jsf"> 我的项目 My project </a>
-<a href="manage.jsf">My information</a>
+<div class="topmenu">
+	<a href="project/myproject.jsf" class="link">My project</a>
+	<a href="manage.jsf" class="link">My information</a>
+	<a href="#" class="search link">
+			<img src="https://www.labstry.com/menu/images/Search.png" class="icon"/><br/>
+			Search
+	</a>
+</div>
 <%} %>
+<div class="fakesubheader" style="background-color:#00c5ff;">
+<div class="searchbarwrapper">
+    <form method="POST" action="search.jsf" class='searchform' onclick="return false;">
+        <div class="search searchinline" id="close">
+  <img src="https://www.labstry.com/menu/images/cross.png" class="buttonimg littleicon"/>
+  </div>
+        <input type="text" name="searchname" class="searchbox" id="searchkey" placeholder="搜尋帖子" />
+            <a class="imagediv" id="sending" href="#">
+            <img src="https://www.labstry.com/menu/images/Search.png" class="buttonimg littleicon" />
+        </a>
+    </form>
+</div>
+</div>
+<div class="searchresultprovider">
+
+</div>
+<h1>Your project, your team, starts here...</h1>
 <form action="search.jsf" method="post">
 Search: <input  type="text" name="searchname" value=""/>
 <input type="submit" />
 </form>
+
 <div>
 Projects:
 <c:forEach items="${list}" var="map">
@@ -59,4 +172,68 @@ Projects:
 </div>
 </f:view>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$('.fakesubheader').css('display') == 'none';
+$('.searchresultprovider').css('display') == 'none';
+$('.search').click(function(){
+	if($('.fakesubheader').css('display') == 'none'){
+		$('.fakesubheader').css({'display':'block','z-index':'1000',
+			'height': '100px'
+		});
+		$('.searchresultprovider').css({'z-index': '1000'});
+		$('.button').css({'display':'none', 'z-index': '-3'});
+		$('.topmenu').css({'display':'none','z-index':'1'});
+		var headercolor = $('.topmenu').css('background-color');
+		$('.fakesubheader').css({'background-color': headercolor});
+		$('#searchkey').css({'background-color': headercolor});
+
+		$('.searchresultprovider').css({'background-color': headercolor,
+		 	'opacity': '0.9'});
+		$('.searchresultprovider').css({'display':'block',
+		});
+
+	}else{
+		$('.fakesubheader').css({'display' : 'none',
+			'height': '0px','z-index':'10'});
+		$('.topmenu').css({'display':'inline-block'});
+		$('.button').css({'display':'inline-block','z-index': '900' });
+		$('.searchresultprovider').css({'display':'none',
+		});
+		// But in a thorough test, it passes all of our test through Android Samsung browser and Chrome on Android,
+  		// we just let magic happens again :D
+	    /* 
+  		if(navigator.userAgent.match(/(iPod|iPhone|iPad|Android)/)){
+     		$('.submenu').css({
+      			'overflow': 'scroll'
+    		})
+     		$('.button').css({
+      			'display': 'none'
+     		})
+  		} */
+	}
+});
+
+var headerheight = parseInt($('.fakesubheader').css('height'));
+var windowheight = parseInt($(window).height());
+
+$('.searchresultprovider').css({'min-height': windowheight - headerheight});
+
+//The content below is ALL ABOUT AJAX
+$('#searchkey').keyup(function(e){
+	e.preventDefault();
+	var forming = $('.searchform');
+	$.ajax({
+		type: 'GET',
+		url: forming.attr('action'),
+		data: forming.serialize(),
+		success: function (data){
+			$('.searchresultprovider').html(data);
+		},
+		error: function(){
+			alert("Error");
+		}
+	});
+});
+</script>
 </html>
