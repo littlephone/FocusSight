@@ -13,6 +13,7 @@
 	if(request.getParameter("pid") != null)
 		pid = Integer.parseInt(request.getParameter("pid"));
 	int userid = (int)session.getAttribute("userid");
+	int tid = Integer.parseInt(request.getParameter("tid"));
 	
 	List<Integer> availyears = new ArrayList<Integer>();
 	List<Integer> months = new ArrayList<Integer>();
@@ -32,6 +33,7 @@
 	
 	//Set page context
 	pageContext.setAttribute("pid", pid);
+	pageContext.setAttribute("tid", tid);
 	pageContext.setAttribute("year", availyears);
 	pageContext.setAttribute("month", months);
 	pageContext.setAttribute("curr_month", curr_month);
@@ -44,7 +46,25 @@
 <c:set target="${projectmbean}" property="pid" value="${pid}"/>
 <c:set value="${projectmbean.projectdetails}" var="projectmap"/>
 <c:set target="${taskmbean}" property="pid" value="${projectmap.pid}"/>
+<c:set target="${taskmbean}" property="tid" value="${tid}"/>
+
+<c:set value="${taskmbean.taskbytid}" var="taskmap"/>
+
+<%-- Resetting the values into taskmbean --%>
+<c:set target="${taskmbean}" property="ttitle" value="${taskmap.ttitle}"/>
+<c:set target="${taskmbean}" property="tcontent" value="${taskmap.tcontent}"/>
+
+<%-- 
+<c:set target="${taskmbean}" property="year" value="${taskmap.year}"/>
+<c:set target="${taskmbean}" property="month" value="${taskmap.month}"/>
+<c:set target="${taskmbean}" property="day" value="${taskmap.day}"/>
+<c:set target="${taskmbean}" property="hour" value="${taskmap.hour}"/>
+<c:set target="${taskmbean}" property="minute" value="${taskmap.minute}"/>
+--%>
+
+
 <html>
+<c:out value="${taskmap['year']}"/>
 <link rel="stylesheet" type="text/css" href="projectsettings.css"/>
 <head>
 <style>
@@ -105,6 +125,8 @@
 }
 </style>
 <meta charset="UTF-8">
+
+
 <title>Add task to ${projectmap.pname} - Labstry FocusSight</title>
 </head>
 <body>
@@ -117,16 +139,22 @@
 </div>
 <h:form styleClass="formwrapperstyle">
 	<h:inputText styleClass="hidden" value="#{taskmbean.pid}"></h:inputText>
+	<h:inputText styleClass="hidden" value="#{taskmbean.tid}"></h:inputText>
 	<h:inputText styleClass="inputblank field" value="#{taskmbean.ttitle}"></h:inputText><br/>
 	Task deadline: 
 	<select name="year" class="year field">
 		<c:forEach items="${year}" var="yearline">
-			<option value="${yearline}">${yearline}</option>
+			<c:if test="${yearline == taskmap.year}" var="current_year">
+				<option value="${yearline}" selected>${yearline}</option>
+			</c:if>
+			<c:if test="${not current_year}">
+				<option value="${yearline}">${yearline}</option>
+			</c:if>
 		</c:forEach>
 	</select>/
 	<select name="month" class="month field">
 		<c:forEach items="${month}" var="monthline">
-			<c:if test="${monthline == curr_month + 1}" var="current_month">
+			<c:if test="${monthline == taskmap.month}" var="current_month">
 				<option value="${monthline}" selected>${monthline}</option>
 			</c:if>
 			<c:if test="${not current_month}">
@@ -136,7 +164,7 @@
 	</select>/
 	<select name="day" class="day field">
 		<c:forEach items="${day}" var="dayline">
-			<c:if test="${dayline == curr_day}" var="current_day">
+			<c:if test="${dayline == taskmap.day}" var="current_day">
 				<option value="${dayline}" selected>${dayline}</option>
 			</c:if>
 			<c:if test="${not current_day}">
@@ -169,10 +197,9 @@
 		<f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
 	</h:inputText>
 	<div class="colouredtext" contenteditable="true">
-	
 	</div>
-	<h:inputTextarea styleClass="hiddentext field" value="#{taskmbean.tcontent}"></h:inputTextarea>
-	<h:commandButton id="submit" type="submit" value="Submit" action="#{taskmbean.addingTasks}"/>
+	<h:inputTextarea styleClass="field hiddentext" value="#{taskmbean.tcontent}"></h:inputTextarea>
+	<h:commandButton id="submit" type="submit" value="Submit" action="#{taskmbean.updateContent}"/>
 </h:form>
 </f:view>
 <div class="taskpreview">
@@ -192,6 +219,8 @@ Task Preview
 
 setDate();
 setPreview();
+getContent();
+
 
 function setPreview(){
 	if($('.inputblank').val() == ''){
@@ -201,6 +230,9 @@ function setPreview(){
 	}
 	$('.deadlinedetails').text($('.date').val());
 	$('.pcontent').html($('.hiddentext').html());
+}
+function getContent(){
+	$('.colouredtext').html($('.hiddentext').html());
 }
 
 function updateDropBox(){

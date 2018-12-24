@@ -113,7 +113,7 @@
 			<c:forEach items="${map}"  var="mapline">
 				<a class="cardasanchor" href="editnotice.jsf?pid=${projectid}&nid=${mapline.nid}">
 					<div class="cardanchorcontent">
-						<div class="noticentry">${mapline.ntitle}</div>
+						<div class="noticentry ntitle">${mapline.ntitle}</div>
 						<div class="noticentry">${mapline.ndate}</div>
 						<div class="noticentry">${mapline.ncontent}</div>
 					</div>
@@ -130,16 +130,15 @@
 				<a href="addtask.jsf?pid=${projectid}">Add task</a>
 				<a href="deletetask.jsf?pid=${projectid}&mode=delete">Delete task</a>
 			</div>
-			<c:set target="${noticembean}" property="pid" value="${projectid}"></c:set>
-			<c:set target="${noticembean}" property="uid" value="${userid}"></c:set>
-			<c:set value="${noticembean.noticemap}" var="map"/>
+			<c:set target="${taskmbean}" property="pid" value="${projectid}"></c:set>
+			<c:set value="${taskmbean.tasklist}" var="tasklistmap"/>
 			<div class="block">
-			<c:forEach items="${map}"  var="mapline">
-				<a class="cardasanchor" href="editnotice.jsf?pid=${projectid}&nid=${mapline.nid}">
+			<c:forEach items="${tasklistmap}"  var="taskmapline">
+				<a class="cardasanchor" href="edittask.jsf?pid=${projectid}&tid=${taskmapline.tid}">
 					<div class="cardanchorcontent">
-						<div class="noticentry">${mapline.ntitle}</div>
-						<div class="noticentry">${mapline.ndate}</div>
-						<div class="noticentry">${mapline.ncontent}</div>
+						<div class="noticentry ntitle">${taskmapline.tname}</div>
+						<div class="noticentry">Deadline: ${taskmapline.end_date}</div>
+						<div class="noticentry">${taskmapline.tcontent}</div>
 					</div>
 				</a>	
 			</c:forEach>
