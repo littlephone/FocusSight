@@ -2,18 +2,26 @@ package me.gacl.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.focussight.stored.SQLToolkit;
+import com.focussight.stored.TaskStored;
+
+import oracle.jdbc.OracleTypes;
 
 
 
@@ -22,15 +30,22 @@ public class ListFileServlet extends HttpServlet {
 	Statement stat = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	int pid =0;
+	List<Map<String, Object>> listmap = new ArrayList<Map<String, Object>>();
+   ArrayList<String> rlist=new ArrayList<String>(); 
 	
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)      
             throws ServletException, IOException {
-        //获取上传文件的目录
+    	
+    	 String p=request.getParameter("pid");
+    	 System.out.println("i am pid:"+p);
+    	 pid=Integer.parseInt(p);
+        
         String uploadFilePath = "C:/Users/yohhd/Documents/GitHub/FocusSight/WebContent/WEB-INF/upload";
         System.out.println("ListFile"+uploadFilePath);
-        //存储要下载的文件名
+       
         Map<String,String> fileNameMap = new HashMap<String,String>();
-        //递归遍历filepath目录下的所有文件和目录，将文件的文件名存储到map集合中
+      
         
         
         
@@ -38,10 +53,10 @@ public class ListFileServlet extends HttpServlet {
         try {
 			listfile(fileNameMap);
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
-		}//File既可以代表一个文件也可以代表一个目录
-        //将Map集合发送到listfile.jsp页面进行显示
+		}
+       
         
         request.setAttribute("fileNameMap", fileNameMap);
         request.getRequestDispatcher("/listfile.jsp").forward(request, response);
@@ -50,29 +65,41 @@ public class ListFileServlet extends HttpServlet {
 
     public void listfile(Map<String,String> map) throws SQLException, ClassNotFoundException{
         String a=null;
-        	Class.forName("oracle.jdbc.driver.OracleDriver");
-             String connectionstr = "jdbc:oracle:thin:@localhost:1521:ORCL";
-             conn = DriverManager.getConnection(connectionstr, "system", "Ky77676849f");
-        	int id = 0;
-        	try{
-        	stat = conn.createStatement();
-        	String sql="select * from presource";  //到时候改用存储过程 where是pid和tid
-        	System.out.println("I am select	1");	
-        	ps = conn.prepareStatement(sql); 
-        	 rs = ps.executeQuery();   
-        		System.out.println("I am select	2");	
-        	
-        	rs.next();
-        	 a= rs.getString("path");
-        	
-        	System.out.println(a);
-        	}catch(Exception e){
-        	e.printStackTrace();
-        	}finally{
-        	conn.close();
-        	}         
-        	   map.put("abc", "abcd");
-        	   map.put(a,"这个是随便写的文件名");  //前面是select出来的名字
+        try {
+			SQLToolkit toolkit = new SQLToolkit();
+			Connection conn = toolkit.Connect();
+			CallableStatement cstmt = conn.prepareCall("{CALL XResources(?,?,?,?,?,?)}");
+			cstmt.setInt(1, 1);
+			cstmt.setInt(2, 0);
+			cstmt.setInt(3, pid);
+			cstmt.registerOutParameter(4, OracleTypes.TIMESTAMP);
+			cstmt.setString(5, null);
+			cstmt.registerOutParameter(6, OracleTypes.CURSOR);
+			cstmt.execute();
+			ResultSet rs = (ResultSet) cstmt.getObject(6);
+			System.out.println("I am 1-2"+ pid);
+			int i=0;
+			while(rs.next()) {
+				Map<String, Object> map1 = new HashMap<String, Object>();
+				map1.put("path", rs.getString("path"));	
+				System.out.println("path:"+ rs.getString("path"));
+				listmap.add(map1);
+				rlist.add(rs.getString("path"));
+				System.out.println("list:"+ rlist.get(i));
+				i++;
+			}
+			conn.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+     
+        for (int i = 0; i < rlist.size(); i++)
+        {  
+        	String s1=rlist.get(i);
+        	   s1=s1.trim();
+        	   map.put(s1,s1);  
+        
+        }
         }   
     
     public void doPost(HttpServletRequest request, HttpServletResponse response)
