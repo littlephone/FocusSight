@@ -92,7 +92,7 @@
 			<div class="seperator"></div>
 			<c:if test="${isowner == true}">
 			<a class="item" href="projectsettings.jsf?pid=${projectid}">Project Settings</a>
-			<a class="item">Manage Members</a>	
+			<a class="item" href="showmember.jsf?pid=${projectid}">Manage Members</a>	
 			<a class="item" href="projectstatus.jsf?pid=${projectid}">Project Status</a>
 			</c:if>
 			<a class="item">Project Requirements</a>

@@ -19,7 +19,16 @@ public class MemberMBean {
 	private boolean projectleader;
 	private List<Map<String, Object>> unconfirmeduser;
 	private List<String> memberList;
+	private List<Map<String, Object>> memberlist ;
 	
+	public List<Map<String, Object>> getMemberlist() {
+		MemberStored mstored = new MemberStored(projectid);
+		memberlist = mstored.allmember();
+		return memberlist;
+	}
+	public void setMemberlist(List<Map<String, Object>> memberlist) {
+		this.memberlist = memberlist;
+	}
 	//For calling back when approving/rejecting/blocking
 	private String confirmUser;
 	private String rejectUser;
