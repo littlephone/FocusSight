@@ -98,7 +98,7 @@
 			<a class="item">Project Requirements</a>
 			<a class="item">Meeting Room</a>
 			<a class="item" href="showtask.jsf?pid=${projectid}">Task</a>
-			<a class="item">Resource</a>
+			<a class="item" href="../ListFileServlet?pid=${projectid}">Resources</a>
 		</div>
 	</div>
 	<div class="noticeboard">
