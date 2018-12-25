@@ -30,11 +30,17 @@ if(!session.isNew()){
 body{
 	margin: 0;
 }
+@keyframes roundedcorners{
+	0%{border-radius: 18px 18px 18px 18px}
+	90%{border-radius: 18px 18px 2px 2px}
+	100%{border-radius: 18px 18px 0px 0px}
+}
 .fakesubheader{
     display:none;
     min-height:100px;
     line-height: 100px;
-    border-radius: 18px;
+    animation: roundedcorners 1s ease;
+    border-radius: 18px 18px 0px 0px
 }
   .searchbarwrapper{
     width:500px;
@@ -82,8 +88,6 @@ body{
 	top:150px;
 	display: none; 
 	animation: : dropdownsearchmenu 1s ease;
-	padding-left: 50px;
-	
 }
 .topmenu a{
 	text-decoration:none;
@@ -128,6 +132,25 @@ body{
 	padding: 20px;
 	text-decoration: none;
 	margin-top: 10px;
+	margin-left: 50px;
+}
+.searchhint{
+	display: block;	
+	text-align : center;
+}
+.leftfloat{
+	display:inline;
+}
+.floatblock{
+	display:inline-block;
+	height: 100px;
+	width:400px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	border-radius: 18px;
+	line-height: 100px;
+	text-decoration:none;
+	padding: 10px;
+	color:black;
 }
 </style>
 <meta charset="UTF-8">
@@ -156,7 +179,7 @@ if(uname != null){
         <div class="search searchinline" id="close">
   <img src="https://www.labstry.com/menu/images/cross.png" class="buttonimg littleicon"/>
   </div>
-        <input type="text" name="searchname" class="searchbox" id="searchkey" placeholder="搜尋帖子" />
+        <input type="text" name="searchname" class="searchbox" id="searchkey" placeholder="Search Project..." />
             <a class="imagediv" id="sending" href="#">
             <img src="https://www.labstry.com/menu/images/Search.png" class="buttonimg littleicon" />
         </a>
@@ -164,25 +187,21 @@ if(uname != null){
 </div>
 </div>
 <div class="searchresultprovider">
-
+	<div class="searchinnerwrapper">
+		<div class="searchhint">Start searching by typing keywords...</div>
+	</div>
 </div>
-<h1>Your project, your team, starts here...</h1>
-<form action="search.jsf" method="post">
-Search: <input  type="text" name="searchname" value=""/>
-<input type="submit" />
-</form>
-
-<div>
-Projects:
+<img style="width:100%;border-radius:18px;overflow:hidden" src="image/glass-table.jpg"/>
+<div class="rounded leftfloat">
+<div>Recommended Projects:</div>
 <c:forEach items="${list}" var="map">
-	<a href="projectdetails.jsf?id=${map.pid}">${map.pname} <br/>
-		
-	</a>
+	<a class="floatblock" href="projectdetails.jsf?id=${map.pid}">${map.pname}</a>
 </c:forEach>
 </div>
 </f:view>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <script>
 $('.fakesubheader').css('display') == 'none';
 $('.searchresultprovider').css('display') == 'none';
@@ -191,6 +210,10 @@ $('.search').click(function(){
 		$('.fakesubheader').css({'display':'block','z-index':'1000',
 			'height': '100px'
 		});
+	    $('.fakesubheader').animate({
+	    	borderRadius: '18px 18px 0px 0px'}
+	    	, 5000   
+	    );
 		$('.searchresultprovider').css({'z-index': '1000'});
 		$('.button').css({'display':'none', 'z-index': '-3'});
 		$('.topmenu').css({'display':'none','z-index':'1'});
@@ -202,8 +225,13 @@ $('.search').click(function(){
 		 	'opacity': '0.9'});
 		$('.searchresultprovider').css({'display':'block',
 		});
-
+		
+		//Special: setting corners gradually
 	}else{
+	    $('.fakesubheader').animate({
+	    	borderRadius: '18px 18px 18px 18px'}
+	       	, 5000   
+	    );
 		$('.fakesubheader').css({'display' : 'none',
 			'height': '0px','z-index':'10'});
 		$('.topmenu').css({'display':'inline-block'});
@@ -226,24 +254,40 @@ $('.search').click(function(){
 
 var headerheight = parseInt($('.fakesubheader').css('height'));
 var windowheight = parseInt($(window).height());
+$('.searchhint').css({
+	'line-height': windowheight - headerheight+'px'
+});
 
 $('.searchresultprovider').css({'min-height': windowheight - headerheight});
 
 //The content below is ALL ABOUT AJAX
 $('#searchkey').keyup(function(e){
 	e.preventDefault();
-	var forming = $('.searchform');
-	$.ajax({
-		type: 'GET',
-		url: forming.attr('action'),
-		data: forming.serialize(),
-		success: function (data){
-			$('.searchresultprovider').html(data);
-		},
-		error: function(){
-			alert("Error");
-		}
-	});
+	if ($('#searchkey').val() != ""){
+		$('.searchhint').css({
+			'display' : 'none'
+		})
+		var forming = $('.searchform');
+		$.ajax({
+			type: 'GET',
+			url: forming.attr('action'),
+			data: forming.serialize(),
+			success: function (data){
+				$('.searchinnerwrapper').html(data);
+			},
+			error: function(){
+				alert("Error");
+			}
+		});
+	}else{
+		//Clear all the contents
+		$('.searchinnerwrapper').html("<div class='searchhint'>Start searching by typing keywords...</div>");
+		$('.searchhint').css({
+			'display': 'block',	
+			'line-height' : (windowheight - headerheight) + 'px',
+			'text-align' : 'center'
+		})
+	}
 });
 </script>
 </html>
