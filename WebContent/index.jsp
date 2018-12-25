@@ -80,7 +80,6 @@ body{
 	width:100%;
 	position:absolute;
 	top:150px;
-	height:400px;
 	display: none; 
 	animation: : dropdownsearchmenu 1s ease;
 	padding-left: 50px;
@@ -110,6 +109,7 @@ body{
     width:500px;
     margin: 0 auto;
     white-space:nowrap;
+    overflow:scroll;
   }
   #close{
     display: inline-block;
@@ -118,7 +118,17 @@ body{
 	display:inline-block;
 	width:350px;
   }
-
+.card{
+	display: block;
+	border-radius: 18px;
+	background-color: grey;
+	color: white;
+	width: 400px;
+	min-height:50px;
+	padding: 20px;
+	text-decoration: none;
+	margin-top: 10px;
+}
 </style>
 <meta charset="UTF-8">
 <title>FocusSight EE - Labstry</title>
@@ -142,7 +152,7 @@ if(uname != null){
 <%} %>
 <div class="fakesubheader" style="background-color:#00c5ff;">
 <div class="searchbarwrapper">
-    <form method="POST" action="search.jsf" class='searchform' onclick="return false;">
+    <form method="POST" action="minsearch.jsf" class='searchform' onclick="return false;">
         <div class="search searchinline" id="close">
   <img src="https://www.labstry.com/menu/images/cross.png" class="buttonimg littleicon"/>
   </div>

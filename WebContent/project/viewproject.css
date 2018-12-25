@@ -80,7 +80,7 @@ body{
 	display:block;
 }
 
-/* We are describing a card here*/
+//* We are describing a card here*/
 .cardasanchor{
 	display:block;
 	text-decoration: none;
@@ -99,4 +99,8 @@ body{
 	clear:both;
 	display:block;
 	padding:10px;
+}
+.ntitle{
+	font-size: 18px;
+	font-weight: bold;
 }
