@@ -20,6 +20,7 @@ public class MemberMBean {
 	private List<Map<String, Object>> unconfirmeduser;
 	private List<String> memberList;
 	private List<Map<String, Object>> memberlist ;
+	private int status;
 	
 	public List<Map<String, Object>> getMemberlist() {
 		MemberStored mstored = new MemberStored(projectid);
@@ -125,5 +126,13 @@ public class MemberMBean {
 	}
 	public void setProjectleader(boolean projectleader) {
 		this.projectleader = projectleader;
+	}
+	public int getStatus() {
+		ProjectStored ps = new ProjectStored();
+		status = ps.getStatus(projectid, userid);
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

@@ -21,6 +21,7 @@ public class ProjectMBean {
 	private String pintro ;
 	private String psnapshot = "haha";
 	private String leader;
+	private int status;
 	
 	public ProjectStored ps = new ProjectStored();
 	
@@ -140,5 +141,12 @@ public class ProjectMBean {
 		return (ps.alterProjectProp(map) == true) ?
 				"projectsettings.jsf?pid=5&type=general&result=success&faces-redirect=true":
 				"projectsettings.jsf?pid=5&type=general&result=failure&faces-redirect=true";
+	}
+	public int getStatus() {
+		
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

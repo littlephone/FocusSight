@@ -219,9 +219,10 @@ public class ProjectStored {
 	}
 	public boolean joinProject(int pid, int userid) {
 		try {
-			CallableStatement cstmt = conn.prepareCall("{CALL JOINPROJECT(?,?)}");
-			cstmt.setInt(1, pid);
-			cstmt.setInt(2, userid);
+			CallableStatement cstmt = conn.prepareCall("{CALL JOINPROJECT(?,?,?)}");
+			cstmt.setInt(1, 1);
+			cstmt.setInt(2, pid);
+			cstmt.setInt(3, userid);
 			cstmt.execute();
 			FacesContext context = FacesContext.getCurrentInstance();
 			 ExternalContext extContext = context.getExternalContext();
@@ -236,6 +237,19 @@ public class ProjectStored {
 			return false;
 		}
 		
+	}
+	
+	public boolean removeMember(int pid, int userid) {
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL JOINPROJECT(?,?,?)}");
+			cstmt.setInt(1, 2);
+			cstmt.setInt(2, userid);
+			cstmt.setInt(3, pid);
+			cstmt.execute();
+			return true;
+		}catch(SQLException sqle) {
+			return false;
+		}
 	}
 	//For users confirming
 	public List<Map<String, Object>> getUnconfirmedUser(int pid) {
@@ -294,5 +308,24 @@ public class ProjectStored {
 			e.printStackTrace();
 			return;
 		}
+	}
+	public int getStatus(int pid, int mid) {
+		int status;
+		try {
+			CallableStatement cstmt = conn.prepareCall("{CALL XMEMBER(?,?,?,?,?)}");
+			cstmt.setInt(1, 8);
+			cstmt.setInt(2, pid);
+			cstmt.setInt(3, mid);
+			cstmt.registerOutParameter(4, OracleTypes.INTEGER);
+			cstmt.registerOutParameter(5, OracleTypes.CURSOR);
+			cstmt.execute();
+			
+			status = cstmt.getInt(4);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return status;
 	}
 }
