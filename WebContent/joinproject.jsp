@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <%@ page import="com.focussight.stored.* , java.util.*" %>
+<%@taglib uri="http://java.sun.com/jsf/core" prefix="f" %>  
+<%@taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -20,13 +23,17 @@
 	
 	//Now we got userid and requested project ID, let's call join project
 	ProjectStored stored = new ProjectStored();
-	boolean isProjectJoinRequested = stored.joinProject(projectid, userid);
-
+	boolean status = false;
+	if("request".equals(request.getParameter("action")))
+		 status = stored.joinProject(projectid, userid);
+	
+	else if("cancel".equals(request.getParameter("action"))){
+		status = stored.removeMember(projectid, userid);
+	}
+	pageContext.setAttribute("status", status);
 %>
 
 <body>
-Successful application!
-<br/>  
-<a href="index.jsf">Index</a>
+${status}
 </body>
 </html>

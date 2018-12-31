@@ -82,7 +82,7 @@
 	<div class="wrapper">
 		<div class="vertical_menu">
 			<div class="image_place">
-			<c:if test="${screenshot == null}" var="noscreenshot">
+			<c:if test="${map.psnapshot == null}" var="noscreenshot">
 				No screenshot
 			</c:if>
 			<c:if test="${not noscreenshot}">
@@ -103,13 +103,13 @@
 	</div>
 	<div class="noticeboard">
 		<div class="noticetitle">Notice</div>
-		<div>
+		<div class="block">
 			<c:forEach items="${noticemaplist}" var="nmap">
 				<div class="cardasanchor">
 					<div class="cardanchorcontent">
-						<div class="noticelinetitle">${nmap.ntitle}</div>
-						<div class="noticelinetitle">${nmap.ndate}</div>
-						<div class="noticelinetitle">${nmap.ncontent}</div>
+						<div class="noticentry ntitle">${nmap.ntitle}</div>
+						<div class="noticentry">${nmap.ndate}</div>
+						<div class="noticentry">${nmap.ncontent}</div>
 					</div>
 				</div>	
 			</c:forEach>
@@ -122,4 +122,17 @@
 
 </c:if>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+$('body').scroll({
+	var titleheight = $(".project_details_wrapper");
+	console.log(titleheight);
+	var currscroll = $(this).scrollTop();
+	console.log(titleheight + '   ' + currscroll);
+	if(titleheight == surrscroll){
+		alert();
+	}
+});
+</script>
 </html>

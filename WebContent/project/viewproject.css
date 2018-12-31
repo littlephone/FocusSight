@@ -41,7 +41,7 @@ body{
 	margin-top: 10px;
 	margin: 0 auto;
 }
-.horizontal_wrapper div{
+.wrapper, .noticeboard {
 	display:inline-block;
 	vertical-align: top;
 }
@@ -50,6 +50,7 @@ body{
 	border: 1px solid grey;
 	border-radius: 20px;
 	width: 300px;
+	overflow:hidden;
 }
 .image_place{
 	width: 100%;
@@ -80,7 +81,13 @@ body{
 	display:block;
 }
 
-//* We are describing a card here*/
+/* We are describing a card here*/
+.block{
+	clear:both;
+	display:block;
+	width: 98%;
+	margin:0 auto;
+}
 .cardasanchor{
 	display:block;
 	text-decoration: none;
@@ -103,4 +110,13 @@ body{
 .ntitle{
 	font-size: 18px;
 	font-weight: bold;
+}
+
+/* We are describing the snapshotimage*/
+
+.snapshotimage{
+	width:100%;
+}
+.image_place{
+	overflow:hidden;
 }
