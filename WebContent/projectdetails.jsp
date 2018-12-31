@@ -64,6 +64,9 @@ body{
 			Introduction: ${map.pintro}
 		</div>
 		<a href="joinproject.jsf?action=request&id=${userid}&project=${map.pid}">Join</a>
+		<br>
+		<br>
+		<a href="index.jsf">&le;&le;back <br/>
 	</div>
 </div>
 </f:view>

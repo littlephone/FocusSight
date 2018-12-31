@@ -34,13 +34,14 @@ pageContext.setAttribute("map", map);
 
 <f:view>
 <h:form >
-Userid: <h:inputText   id="userid" value="#{usermbean.userid}"/>
-Username: <h:inputText  id="username" value="#{usermbean.username}"/>
-GENDER:<h:inputText id="gender" value="#{usermbean.gender}"/>
-Profession:<h:inputText id="profession" value="#{usermbean.profession}"/>
-AGE:<h:inputText id="age" value="#{usermbean.age}"/>
-EMAIL:<h:inputText id="email" value="#{usermbean.email}"/>
-PHONE:<h:inputText id="phone" value="#{usermbean.phone}"/>
+<a href="index.jsf"> &le;&le;back <br/>
+Userid: <h:inputText   id="userid" value="#{usermbean.userid}"/><br/>
+Username: <h:inputText  id="username" value="#{usermbean.username}"/><br/>
+GENDER:<h:inputText id="gender" value="#{usermbean.gender}"/><br/>
+Profession:<h:inputText id="profession" value="#{usermbean.profession}"/><br/>
+AGE:<h:inputText id="age" value="#{usermbean.age}"/><br/>
+EMAIL:<h:inputText id="email" value="#{usermbean.email}"/><br/>
+PHONE:<h:inputText id="phone" value="#{usermbean.phone}"/><br/>
 <h:commandButton id="submit" type="submit" value="Submit" action="#{usermbean.UpdateUserInfoByUid}"/>
 </h:form>
 </f:view>

@@ -30,7 +30,9 @@
 <title>All Task</title>
 </head>
 <body>
+
 <f:view>
+
 <c:set value="${membermbean.memberlist}" var="map"/>
 <c:forEach items="${map}"  var="mapline">
 	组员名称：${mapline.name}&nbsp;&nbsp;

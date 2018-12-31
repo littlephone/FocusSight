@@ -42,6 +42,7 @@ body{
 <title>FocusSight EE - Labstry</title>
 </head>
 <body>
+<a href="index.jsf">&le;&le;back <br/>
 <f:view>
 <c:forEach items="${list}" var="map">
 	<a href="projectdetails.jsf?id=${map.pid}">${map.pname} <br/>
