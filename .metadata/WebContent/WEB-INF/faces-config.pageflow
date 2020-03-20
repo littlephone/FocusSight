@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15427273000160" configfile="/FocusSight/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="NewFile" comment="out" id="pf15445926006260" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15445926006271 pf15445926006272" path="/NewFile.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="welcome" id="pf15445926006273" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15445926006271" path="/welcome.jsp"/>
-  <nodes xsi:type="pageflow:PFPage" name="index" id="pf15445926006274" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15445926006272" path="/index.jsp"/>
-  <links id="pf15445926006271" target="pf15445926006273" source="pf15445926006260" outcome="success"/>
-  <links id="pf15445926006272" target="pf15445926006274" source="pf15445926006260" outcome="failure"/>
-</pageflow:Pageflow>
