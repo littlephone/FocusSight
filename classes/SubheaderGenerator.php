@@ -35,9 +35,7 @@ class SubheaderGenerator{
 		}
 		$submenu .= "</div>";
 
-		$submenu .= "<a href=\"#\" class=\"button right\" style=\"display: none; height: 100px; vertical-align: top; float: right; background-color: rgba(75, 210, 176, 0.8);\"><div class=\"dummy-child\"></div>
-						<img src=\"../menu/images/right.png\" class=\"icon\" style=\"height:30px;width:30px;\">
-					</a></div>";
+		$submenu .= ";
 
 
 		return $submenu;

@@ -26,11 +26,11 @@ $myprojectlist = $project->getUserProject($userid);
 <html>
 <Title>All projects - Labstry FocusSight</Title>
 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-<link rel="stylesheet" href="menu/general.css"/>
-<link rel="stylesheet" type="text/css" href="/menu/dynamicmenu.css"/>
+<link rel="stylesheet" href="module/general.css"/>
+<link rel="stylesheet" type="text/css" href="/module/dynamicmenu.css"/>
 
 <body>
-<?php include @$_SERVER['DOCUMENT_ROOT']."/focussight/menu/header.php"; ?>
+<?php include @$_SERVER['DOCUMENT_ROOT']."/focussight/module/header.php"; ?>
 
 <a href="createproject.php">I would like to create a project and recruit members</a>
 
