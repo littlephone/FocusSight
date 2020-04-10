@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 session_start();
 //Redirect unregistered user
-if(!@$_SESSION['username']) header("Location: /focussight/index.php");
+if(!@$_SESSION['username']) header("Location: /focussight/conference-room-client.php");
 
 
 include_once @$_SERVER['DOCUMENT_ROOT']."/focussight/classes/SQLiteOpener.php";
@@ -126,7 +126,7 @@ background-position: right bottom;
 
 </style>
 
-<?php include_once("menu/header.php"); ?>
+<?php include_once("module/header.php"); ?>
 
 <h2 style="padding-left: 10px;">Create Project "<span id="projectname"></span>"</h2>
 
