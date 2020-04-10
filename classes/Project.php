@@ -8,11 +8,11 @@ class Project{
 	public $pdoconnect;
 	public $pid;
 	public $pname;
-	public $managerid;
+	public $manager_id;
 	public $requirements;
-	public $progress;
-	public $pintro;
-	public $psnapshot;
+	public $status;
+	public $introduction;
+	public $project_snapshot;
 	public $accept;
 	public $recommended;
 	public $rules;
@@ -34,12 +34,12 @@ class Project{
 		$resultset = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		$this->pname = $resultset["pname"];
-		$this->managerid = $resultset["managerid"];
+		$this->manager_id = $resultset["manager_id"];
 		$this->requirements = $resultset["requirements"];
-		$this->progress = $resultset["progress"];
-		$this->pintro = $resultset["pintro"];
-		$this->psnapshot = $resultset["psnapshot"];
-		$this->accept = $resultset["accept"];
+		$this->status = $resultset["status"];
+		$this->introduction = $resultset["introduction"];
+		$this->project_snapshot = $resultset["project_snapshot"];
+		$this->accept = $resultset["accepting_members"];
 
 	}
 	public function searchProject($keyword){
@@ -51,13 +51,13 @@ class Project{
 
 	}
 
-	public function createProject($pname, $managerid, $requirements, $progress, $pintro, $psnapshot, $accept, $rules){
+	public function createProject($pname, $manager_id, $requirements, $status, $introduction, $project_snapshot, $accept, $rules){
 		$this->pname = $pname;
-		$this->managerid = $managerid;
+		$this->manager_id = $manager_id;
 		$this->requirements = $requirements;
-		$this->progress = $progress;
-		$this->pintro = $pintro;
-		$this->psnapshot = $psnapshot;
+		$this->status = $status;
+		$this->introduction = $introduction;
+		$this->project_snapshot = $project_snapshot;
 		$this->accept = $accept;
 		$this->rules = $rules;
 
@@ -66,15 +66,16 @@ class Project{
 			$this->pdoconnect->beginTransaction();
 
 			$stmt = $this->pdoconnect->prepare("INSERT INTO Project
-								(pname, managerid, requirements, progress, pintro, psnapshot, accept, rules, create_date)
+								(pname, manager_id, requirements, status, introduction , project_snap_shot, 
+								accepting_members , participating_rules, create_date)
 								VALUES (?,?,?,?,?,?,?,?, CURRENT_TIMESTAMP())");
 
 			$stmt->bindValue(1, $this->pname, PDO::PARAM_STR);
-			$stmt->bindValue(2, $this->managerid, PDO::PARAM_INT);
+			$stmt->bindValue(2, $this->manager_id, PDO::PARAM_INT);
 			$stmt->bindValue(3, $this->requirements, PDO::PARAM_INT);
-			$stmt->bindValue(4, $this->progress, PDO::PARAM_STR);
-			$stmt->bindValue(5, $this->pintro, PDO::PARAM_STR);
-			$stmt->bindValue(6, $this->psnapshot, PDO::PARAM_STR);
+			$stmt->bindValue(4, $this->status, PDO::PARAM_STR);
+			$stmt->bindValue(5, $this->introduction, PDO::PARAM_STR);
+			$stmt->bindValue(6, $this->project_snapshot, PDO::PARAM_STR);
 			$stmt->bindValue(7, $this->accept, PDO::PARAM_INT);
 			$stmt->bindValue(8, $this->rules, PDO::PARAM_STR);
 
@@ -97,14 +98,14 @@ class Project{
 		return $this->pid; 
 	}
 
-	public function editProject($pid, $pname, $managerid, $requirements, $progress, $pintro, $psnapshot, $accept, $rules){
+	public function editProject($pid, $pname, $manager_id, $requirements, $status, $introduction, $project_snapshot, $accept, $rules){
 		$this->pid = $pid;
 		$this->pname = $pname;
-		$this->managerid = $managerid;
+		$this->manager_id = $manager_id;
 		$this->requirements = $requirements;
-		$this->progress = $progress;
-		$this->pintro = $pintro;
-		$this->psnapshot = $psnapshot;
+		$this->status = $status;
+		$this->introduction = $introduction;
+		$this->project_snapshot = $project_snapshot;
 		$this->accept = $accept;
 		$this->rules = $rules;
 

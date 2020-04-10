@@ -61,7 +61,7 @@ if($viewpage == "index"){
   //left button
   echo "\n\t<a href='#' class='button left' style='display:inline-block;height:100px;'>";
   echo "<div class='dummy-child'></div>";
-  echo "\n\t\t\t<img src='../menu/images/left.png' class='icon' style='height:30px;width:30px;'/>";
+  echo "\n\t\t\t<img src='/images/left.png' class='icon' style='height:30px;width:30px;'/>";
   echo "\n\t</a>";
 
   echo "<div class='submenu' style='overflow:hidden; display:inline-block; white-space:nowrap; height: 100px;vertical-align:'>";
@@ -79,30 +79,30 @@ if($viewpage == "index"){
       \n\t<div style='text-align:center'>My Project</div>
       </a></div>";
   }
-   echo  "<div class='useraction search'>
+   echo "<div class='useraction search'>
             <a class='submenuitem' href='#'>
-            <img src='../menu/images/Search.png' class='icon' />
+            <img src='/images/Search.png' class='icon' />
             <div style='text-align:center'>搜尋&ensp;Search</div>
            </a>
         </div>";
   
   
-    echo  "<div class='useraction'> 
+    echo "<div class='useraction'> 
        <a class='submenuitem' href='forumlist.php'>
-      \n\t<img src='../menu/images/discussion.png' class='icon' />
+      \n\t<img src='/images/discussion.png' class='icon' />
       \n\t<div style='text-align:center'>板塊&ensp;Thread</div>
       </a></div>";
   
- echo  "<div class='useraction'> 
-       <a class='submenuitem' href='index.php'>
-      \n\t<img src='../menu/images/msg.png' class='icon' />
+ echo "<div class='useraction'> 
+       <a class='submenuitem' href='conference-room-client.php'>
+      \n\t<img src='/images/msg.png' class='icon' />
       \n\t<div style='text-align:center'>訊息(即將推出)&ensp;Messages</div>
       </a></div>";
   echo   "</div>";
   //Right button
   echo "\n\t<a href='#' class='button right' style='display:inline-block;height:100px;vertical-align:top;float:right;'>";
   echo "<div class='dummy-child'></div>";
-  echo "\n\t\t<img src='../menu/images/right.png' class='icon' style='height:30px;width:30px;'/>";
+  echo "\n\t\t<img src='/images/right.png' class='icon' style='height:30px;width:30px;'/>";
   echo "\n\t</div>";
   echo "</a>";
   //echo "</div>";
