@@ -1,6 +1,7 @@
 
 $so_focus_orange : #ffb266;
 $solar_purple : #4B317C;
+$creative_blue: #00c5cf;
 
 .color-so-focus-orange{
   color: $so_focus_orange;
@@ -16,4 +17,8 @@ $solar_purple : #4B317C;
 
 .bg-solar-purple{
   background-color: $solar_purple;
+}
+
+.bg-creative-blue{
+  background-color:  $creative_blue;
 }
